@@ -1,0 +1,16 @@
+Server:
+	client, ben je er nog?
+	client, heb je nog nieuwe texten voor me?
+	client, hier heb je alle berichten tussen de laatste keer dat ik het vroeg en nu
+
+	1x per seconde oid vragen
+	alle berichten naar een txt bestand schrijven
+
+Client:
+	gebruikersnaam:\nBericht\n\n
+	voor client gereed maken
+	bericht vergeten wanneer verzonden
+	alle berichten bovenin weergeven
+
+
+tussen server en client een bepaalde "code" maken om te kijken of de verbinding er nog is
