@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.io.IOException;
 import java.net.*;
 import static java.net.InetAddress.*;
+import java.util.Date;
 import javax.swing.*;
 
 /**
@@ -20,9 +21,9 @@ import javax.swing.*;
 public class ServerContent extends JPanel implements Runnable {
 
     private ServerSocket sock = null;
-    private Color textColor = Color.GREEN;
     private SocketData s = null;
     private JTextArea text;
+    private ServerLog logger;
 
     public ServerContent(JTextArea text) {
 	try {
@@ -31,10 +32,8 @@ public class ServerContent extends JPanel implements Runnable {
 	    InetAddress i = getLocalHost();
 	    System.err.println(i + ":" + geefPort());
 	    this.s = new SocketData(sock);
-
-	    for (Socket a : s.sockets) {
-		System.err.println(a.getInetAddress());
-	    }
+	    this.logger = new ServerLog();
+	    logger.addText("Server started on: " + new Date() + "on IP:" + i + ":" + geefPort());
 
 	} catch (IOException e) {
 	    e.printStackTrace();

@@ -46,5 +46,4 @@ public class SocketData implements Runnable {
 	    }
 	}
     }
-
 }
