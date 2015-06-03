@@ -11,7 +11,6 @@ import java.awt.Graphics2D;
 import java.io.IOException;
 import java.net.*;
 import static java.net.InetAddress.*;
-import java.util.*;
 import javax.swing.*;
 
 /**
@@ -22,20 +21,21 @@ public class ServerContent extends JPanel implements Runnable {
 
     private ServerSocket sock = null;
     private Color textColor = Color.GREEN;
-    private ArrayList<Socket> sockets;
     private SocketData s = null;
+    private JTextArea text;
 
-    public ServerContent() {
+    public ServerContent(JTextArea text) {
 	try {
 	    this.sock = new ServerSocket(0);
+	    this.text = text;
 	    InetAddress i = getLocalHost();
 	    System.err.println(i + ":" + geefPort());
 	    this.s = new SocketData(sock);
-	    
-	    for (Socket a : s.sockets){
+
+	    for (Socket a : s.sockets) {
 		System.err.println(a.getInetAddress());
 	    }
-	    
+
 	} catch (IOException e) {
 	    e.printStackTrace();
 	    System.exit(0);
