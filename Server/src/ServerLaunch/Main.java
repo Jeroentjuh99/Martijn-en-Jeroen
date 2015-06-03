@@ -9,6 +9,10 @@ import ServerContent.ServerContent;
 import java.awt.*;
 import javax.swing.*;
 
+
+//JTextarea ff naar kijken voor server text
+//of: http://docs.oracle.com/javase/tutorial/uiswing/components/editorpane.html
+
 /**
  *
  * @author jeroen
@@ -25,9 +29,16 @@ public class Main extends JFrame {
 	setSize(720,600);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 	
-	ServerContent s = new ServerContent();
-	s.setBackground(Color.BLACK);
-	JScrollPane pane = new JScrollPane(s, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	JTextArea text = new JTextArea();
+	text.setEditable(false);
+	text.setWrapStyleWord(true);
+	text.setLineWrap(true);
+	text.setBackground(Color.PINK);
+	text.setFont(new Font("Lucida Console", Font.TRUETYPE_FONT, 12));
+	
+	ServerContent s = new ServerContent(text);
+	text.setText("Jeroen is supercool :D");
+	JScrollPane pane = new JScrollPane(text, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	add(pane, BorderLayout.CENTER);
 	
 	setResizable(false);
