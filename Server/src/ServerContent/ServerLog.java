@@ -19,26 +19,26 @@ import java.util.Date;
 public class ServerLog {
 
     private PrintWriter writer = null;
+    public static SimpleDateFormat format = new SimpleDateFormat("d-M-yy HH.mm.ss");
 
     public ServerLog() throws FileNotFoundException, IOException {
-	SimpleDateFormat format = new SimpleDateFormat("d-M-yy HH.mm.ss");
 	Date date = new Date();
-		
 	File file = new File("Log//ServerLog " + format.format(date) + ".txt");
-	System.err.println(file.getAbsolutePath());
-
 	file.createNewFile();
 	this.writer = new PrintWriter(file);
     }
 
     public void addText(String text) {
 	if (!(writer == null)) {
-	    writer.write(text + "\n\n");
+	    writer.println(text);
+	    writer.flush();
 	}
     }
 
     public void closeFile() {
 	if (!(writer == null)) {
+	    Date d = new Date();
+	    addText("Server shutdown on: " + format.format(d));
 	    writer.close();
 	}
     }

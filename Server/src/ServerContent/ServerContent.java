@@ -18,13 +18,13 @@ import javax.swing.*;
  * @author jeroen
  */
 public class ServerContent extends JPanel implements Runnable {
-
+    
     private ServerSocket sock = null;
     private SocketData s = null;
     private JTextArea textOutput;
     private JTextField textInput;
     private ServerLog logger;
-
+    
     public ServerContent(JTextArea textOutput, JTextField textInput) {
 	try {
 	    this.sock = new ServerSocket(0);
@@ -32,16 +32,17 @@ public class ServerContent extends JPanel implements Runnable {
 	    this.textInput = textInput;
 	    this.logger = new ServerLog();
 	    InetAddress i = getLocalHost();
-	    System.err.println(i + ":" + geefPort());
+	    textOutput.append(i + ":" + geefPort() + '\n');
 	    this.s = new SocketData(sock);
-	    logger.addText("Server started on: " + new Date() + " on IP:" + i + ":" + geefPort());
-
+	    Date date = new Date();
+	    logger.addText("Server started on: " + ServerLog.format.format(date) + " on IP:" + i + ":" + geefPort());
+	    
 	} catch (IOException e) {
 	    e.printStackTrace();
 	    System.exit(0);
 	}
     }
-
+    
     private int geefPort() {
 	if (!(sock == null)) {
 	    return sock.getLocalPort();
@@ -49,14 +50,32 @@ public class ServerContent extends JPanel implements Runnable {
 	    return -1;
 	}
     }
-
+    
     @Override
     public void run() {
 	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     public void paintComponent(Graphics g) {
 	super.paintComponent(g);
 	Graphics2D g2 = (Graphics2D) g;
+    }
+    
+    public void sluitLogger() {
+	logger.closeFile();
+    }
+    
+    public void logText(String text) {
+	textOutput.append(text + '\n');
+	logger.addText(text);
+    }
+    
+    public void showTextFromCommand(String text){
+	if(text.equalsIgnoreCase("ip")){
+	    try{
+	    logText("IP: " + getLocalHost() + ':' + geefPort());
+	    } catch (IOException e){
+	    }
+	}
     }
 }
