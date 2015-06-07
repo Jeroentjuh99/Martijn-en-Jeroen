@@ -7,7 +7,9 @@ package ServerContent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -18,17 +20,27 @@ public class ServerLog {
 
     private PrintWriter writer = null;
 
-    public ServerLog() throws FileNotFoundException{
-	File file = new File("ServerLog " + new Date() + ".txt");
-	System.out.println(file);
+    public ServerLog() throws FileNotFoundException, IOException {
+	SimpleDateFormat format = new SimpleDateFormat("d-M-yy HH.mm.ss");
+	Date date = new Date();
+		
+	File file = new File("Log//ServerLog " + format.format(date) + ".txt");
+	System.err.println(file.getAbsolutePath());
+
+	file.createNewFile();
 	this.writer = new PrintWriter(file);
+
     }
 
     public void addText(String text) {
-	writer.println(text);
+	if (!(writer == null)) {
+	    writer.println(text);
+	}
     }
 
     public void closeFile() {
-	writer.close();
+	if (!(writer == null)) {
+	    writer.close();
+	}
     }
 }

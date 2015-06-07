@@ -5,7 +5,6 @@
  */
 package ServerContent;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.IOException;
@@ -29,11 +28,11 @@ public class ServerContent extends JPanel implements Runnable {
 	try {
 	    this.sock = new ServerSocket(0);
 	    this.text = text;
+	    this.logger = new ServerLog();
 	    InetAddress i = getLocalHost();
 	    System.err.println(i + ":" + geefPort());
 	    this.s = new SocketData(sock);
-	    this.logger = new ServerLog();
-	    logger.addText("Server started on: " + new Date() + "on IP:" + i + ":" + geefPort());
+	    logger.addText("Server started on: " + new Date() + " on IP:" + i + ":" + geefPort());
 
 	} catch (IOException e) {
 	    e.printStackTrace();
