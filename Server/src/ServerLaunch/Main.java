@@ -9,14 +9,13 @@ import ServerContent.*;
 import java.awt.*;
 import javax.swing.*;
 
-//JTextarea ff naar kijken voor server text
-//of: http://docs.oracle.com/javase/tutorial/uiswing/components/editorpane.html
 /**
  *
  * @author jeroen
  */
 public class Main extends JFrame {
-        private final Color textColor = Color.GREEN;
+
+    private final Color textColor = Color.GREEN;
 
     public static void main(String[] args) {
 	Main m = new Main();
@@ -28,18 +27,31 @@ public class Main extends JFrame {
 	setSize(720, 600);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-	JTextArea text = new JTextArea();
-	text.setEditable(false);
-	text.setWrapStyleWord(true);
-	text.setLineWrap(true);
-	text.setBackground(Color.BLACK);
-	text.setFont(new Font("Lucida Console", Font.BOLD, 13));
-	text.setForeground(textColor);
-	ServerContent s = new ServerContent(text);
-	JScrollPane pane = new JScrollPane(text, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	JTextArea textOut = setTextArea(new JTextArea());
+	JTextField textIn = setTextField(new JTextField());
+
+	ServerContent s = new ServerContent(textOut, textIn);
+	JScrollPane pane = new JScrollPane(textOut, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	add(pane, BorderLayout.CENTER);
 
 	setResizable(false);
 	setVisible(true);
+    }
+
+    private JTextArea setTextArea(JTextArea textOut) {
+	textOut.setEditable(false);
+	textOut.setWrapStyleWord(true);
+	textOut.setLineWrap(true);
+	textOut.setBackground(Color.BLACK);
+	textOut.setFont(new Font("Lucida Console", Font.BOLD, 13));
+	textOut.setForeground(textColor);
+	return textOut;
+    }
+    
+    private JTextField setTextField(JTextField textIn) {
+	textIn.setBackground(Color.BLACK);
+	textIn.setFont(new Font("Lucida Console", Font.BOLD, 13));
+	textIn.setForeground(textColor);
+	return textIn;
     }
 }

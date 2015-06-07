@@ -21,13 +21,15 @@ public class ServerContent extends JPanel implements Runnable {
 
     private ServerSocket sock = null;
     private SocketData s = null;
-    private JTextArea text;
+    private JTextArea textOutput;
+    private JTextField textInput;
     private ServerLog logger;
 
-    public ServerContent(JTextArea text) {
+    public ServerContent(JTextArea textOutput, JTextField textInput) {
 	try {
 	    this.sock = new ServerSocket(0);
-	    this.text = text;
+	    this.textOutput = textOutput;
+	    this.textInput = textInput;
 	    this.logger = new ServerLog();
 	    InetAddress i = getLocalHost();
 	    System.err.println(i + ":" + geefPort());

@@ -29,12 +29,11 @@ public class ServerLog {
 
 	file.createNewFile();
 	this.writer = new PrintWriter(file);
-
     }
 
     public void addText(String text) {
 	if (!(writer == null)) {
-	    writer.println(text);
+	    writer.write(text + "\n\n");
 	}
     }
 
