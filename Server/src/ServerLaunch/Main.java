@@ -20,7 +20,12 @@ public class Main extends JFrame {
     private ServerContent s = null;
 
     public static void main(String[] args) {
-	Main m = new Main();
+	SwingUtilities.invokeLater(new Runnable() {
+	    public void run() {
+		Main main = new Main();
+	    }
+	});
+
     }
 
     public Main() {

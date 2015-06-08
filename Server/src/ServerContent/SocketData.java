@@ -34,7 +34,7 @@ public class SocketData implements Runnable {
 		sockets.add(new HandleAClient(socket));
 
 		for (HandleAClient s : sockets) {
-		    s.checkAlive();
+		    
 		}
 
 		Thread.sleep((long) 1000);
