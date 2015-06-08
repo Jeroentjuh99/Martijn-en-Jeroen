@@ -38,25 +38,27 @@ public class Main extends JFrame {
 		{
 		setSize(600, 800);
 		JPanel backgroundSouth = new JPanel(new FlowLayout(FlowLayout.LEFT));
-//		JPanel panel = new JPanel();
-		//JTextArea chat = new JTextArea();
-		//chat.setSize(panel.getWidth(), panel.getHeight());
-		System.out.println(panel.getWidth());
-//		panel.add(chat);
 		JTextArea bericht = new JTextArea(5,40); 
+		volgendeRegel(bericht);
+		JTextArea ontvangenBerichten = new JTextArea(41,52); 
+		ontvangenBerichten.setEditable(false);
+		volgendeRegel(ontvangenBerichten);
 		JScrollPane scrollen = new JScrollPane(bericht, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane scrollen1 = new JScrollPane(ontvangenBerichten, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		panel.add(scrollen1);
 		backgroundSouth.add(scrollen);
 		backgroundSouth.add(menu.Send(bericht));
+//		JButton button = menu.Send(bericht);
+//		backgroundSouth.add(button);
+//		getRootPane().setDefaultButton(button);
+		
 		backgroundSouth.setBorder(BorderFactory.createLineBorder(Color.orange,5));
 		add(backgroundSouth, BorderLayout.SOUTH);
 		getContentPane().add(panel);
-		//panel.setBackground(Color.black);
 		setResizable(false);
 		setVisible(true);
 		
 //		ServerConnection c = new ServerConnection(menu, panel);
-		
-		System.out.println(panel.getHeight());
 		}
 	}
 	

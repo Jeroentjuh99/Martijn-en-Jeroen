@@ -19,21 +19,23 @@ public class Menu extends JPanel {
 	private ServerConnection server;
 	protected String gebruikersnaam1;
 	protected ArrayList<JTextArea> berichten = new ArrayList();
-	private JPanel panel;
+//	private JPanel panel;
 
 	public Menu(Main main, JPanel panel) {
 		this.main = main;
-		this.panel = panel;
-//		server= new ServerConnection(this, panel);
+//		this.panel = panel;
+		server= new ServerConnection(this, panel);
 	}
 	public JButton Send(final JTextArea bericht) {
 		JButton Send = new JButton("Send");
 		Send.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				System.out.println(bericht.getText());
-				bericht.setText(null);
-				berichten.add(bericht);
-				//server.sendMessage(bericht.getText());
+				if(!(bericht.getText().isEmpty()))
+				{
+					System.out.println(bericht.getText());
+					bericht.setText(null);
+					berichten.add(bericht);
+				}
 			}
 		});
 		return Send;
@@ -64,10 +66,11 @@ public class Menu extends JPanel {
 		{
 			if(!gebruikersnaam.getText().isEmpty()&&!ipadres.getText().isEmpty())
 			{
+//				server= new ServerConnection(this, panel);
 				this.gebruikersnaam1= gebruikersnaam.getText();
 				if(server.serverConnection(gebruikersnaam.getText(),ipadres.getText()))
 				{
-					server= new ServerConnection(this, panel);
+//					server= new ServerConnection(this, panel);
 					return true;
 				}
 				else

@@ -6,6 +6,7 @@ import java.net.*;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class ServerConnection implements Runnable{
 
@@ -23,12 +24,12 @@ public class ServerConnection implements Runnable{
 		Thread t = new Thread(this);
 		t.start();
 	}
+	
 
 	public void sendMessage(String message) {
 		try {
 			toServer.writeUTF(message);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -39,7 +40,17 @@ public class ServerConnection implements Runnable{
 			text = fromServer.readUTF();
 			if(text.isEmpty())
 			{
+				System.out.println("niks gekregen");
 				return;
+			}
+			else if(text.startsWith("/say "))
+			{
+				JTextArea message = new JTextArea(5,50);
+				message.setText(text.substring(4, text.length()-1));
+				message.setWrapStyleWord(true);
+				message.setLineWrap(true);
+				//message.
+				panel.add(message);
 			}
 			else if(text.startsWith("/isAlive "))
 			{
@@ -62,8 +73,9 @@ public class ServerConnection implements Runnable{
 				{
 					for(int i=0;i<menu.berichten.size();i++)
 					{
-						sendMessage("/say "+menu.berichten.get(i).getText());
+						sendMessage("/say "+menu.gebruikersnaam1+": "+menu.berichten.get(i).getText());
 						toServer.flush();
+						System.out.println("bericht verstuurd");
 					}
 					menu.berichten.clear();
 				}
@@ -79,9 +91,7 @@ public class ServerConnection implements Runnable{
 				.showMessageDialog(null,
 						"De server heeft de connectie verbroken");
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception ex) {
 		}
 	}
 	
@@ -89,7 +99,6 @@ public class ServerConnection implements Runnable{
 		try {
 			toServer.writeBoolean(true);;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -130,7 +139,6 @@ public class ServerConnection implements Runnable{
 				getMessage();
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
