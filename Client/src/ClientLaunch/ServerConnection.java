@@ -24,7 +24,12 @@ public class ServerConnection implements Runnable{
 	}
 
 	public void sendMessage(String message) {
-		
+		try {
+			toServer.writeUTF(message);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void getMessage() {
@@ -33,7 +38,15 @@ public class ServerConnection implements Runnable{
 			text = fromServer.readUTF();
 			if(text.equals("leef je nog woord"))
 			{
-				sendMessage("ik leef nog");
+				ikLeefNog();
+			}
+			else if(text.equalsIgnoreCase("/gebruikersnaam"))
+			{
+				sendMessage("/gebruikersnaam "+menu.gebruikersnaam1);
+			}
+			else if(text.equalsIgnoreCase("/"))
+			{
+				
 			}
 			else if(!text.isEmpty())
 			{
@@ -41,6 +54,15 @@ public class ServerConnection implements Runnable{
 			message.setText(text);
 			panel.add(message);
 			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void ikLeefNog(){
+		try {
+			toServer.writeBoolean(true);;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

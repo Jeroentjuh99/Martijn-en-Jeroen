@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -16,7 +17,8 @@ public class Menu extends JPanel {
 
 	private Main main;
 	private ServerConnection server;
-	private String gebruikersnaam1;
+	protected String gebruikersnaam1;
+	protected ArrayList<JTextArea> berichten = new ArrayList();
 
 	public Menu(Main main, JPanel panel) {
 		this.main = main;
@@ -28,13 +30,15 @@ public class Menu extends JPanel {
 			public void actionPerformed(ActionEvent event) {
 				System.out.println(bericht.getText());
 				bericht.setText(null);
+				berichten.add(bericht);
+				//server.sendMessage(bericht.getText());
 			}
 		});
 		return Send;
 	}
 	
 	
-	public boolean gebruikersnaam()
+	public boolean login()
 	{
 		JTextField gebruikersnaam = new JTextField();
 		JTextField ipadres = new JTextField();
@@ -66,14 +70,14 @@ public class Menu extends JPanel {
 				else
 				{
 					JOptionPane.showMessageDialog(null, "Het serveradres is niet berijkbaar");
-					gebruikersnaam();
+					login();
 					return false;
 				}
 			}
 			else
 			{
 				JOptionPane.showMessageDialog(null, "Vul een gebruikersnaam in en een ipadres + poortnummer");
-				gebruikersnaam();
+				login();
 				return false;
 			}
 		}

@@ -34,11 +34,11 @@ public class Main extends JFrame {
 	public Main() {
 		super("Windows Live Messenger");
 		Menu menu = new Menu(this,panel);
-		if(menu.gebruikersnaam())
+		if(menu.login())
 		{
 		setSize(600, 800);
 		JPanel backgroundSouth = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel panel = new JPanel();
+//		JPanel panel = new JPanel();
 		//JTextArea chat = new JTextArea();
 		//chat.setSize(panel.getWidth(), panel.getHeight());
 		System.out.println(panel.getWidth());
