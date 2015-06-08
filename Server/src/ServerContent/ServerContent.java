@@ -5,8 +5,6 @@
  */
 package ServerContent;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.io.IOException;
 import java.net.*;
 import static java.net.InetAddress.*;
@@ -17,14 +15,14 @@ import javax.swing.*;
  *
  * @author jeroen
  */
-public class ServerContent extends JPanel{
-    
+public class ServerContent extends JPanel {
+
     private ServerSocket sock = null;
     private SocketData s = null;
     private JTextArea textOutput;
     private JTextField textInput;
     private ServerLog logger;
-    
+
     public ServerContent(JTextArea textOutput, JTextField textInput) {
 	try {
 	    this.sock = new ServerSocket(0);
@@ -36,13 +34,13 @@ public class ServerContent extends JPanel{
 	    this.s = new SocketData(sock);
 	    Date date = new Date();
 	    logger.addText("Server started on: " + ServerLog.format.format(date) + " on IP: " + i + ":" + geefPort());
-	    
+
 	} catch (IOException e) {
 	    e.printStackTrace();
 	    System.exit(0);
 	}
     }
-    
+
     private int geefPort() {
 	if (!(sock == null)) {
 	    return sock.getLocalPort();
@@ -50,21 +48,21 @@ public class ServerContent extends JPanel{
 	    return -1;
 	}
     }
-    
+
     public void sluitLogger() {
 	logger.closeFile();
     }
-    
+
     public void logText(String text) {
 	textOutput.append(text + '\n');
 	logger.addText(text);
     }
-    
-    public void showTextFromCommand(String text){
-	if(text.equalsIgnoreCase("ip")){
-	    try{
-	    logText("IP: " + getLocalHost() + ':' + geefPort());
-	    } catch (IOException e){
+
+    public void showTextFromCommand(String text) {
+	if (text.equalsIgnoreCase("ip")) {
+	    try {
+		logText("IP: " + getLocalHost() + ':' + geefPort());
+	    } catch (IOException e) {
 	    }
 	}
     }
