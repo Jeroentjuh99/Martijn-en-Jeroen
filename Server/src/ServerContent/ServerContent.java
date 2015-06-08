@@ -17,7 +17,7 @@ import javax.swing.*;
  *
  * @author jeroen
  */
-public class ServerContent extends JPanel implements Runnable {
+public class ServerContent extends JPanel{
     
     private ServerSocket sock = null;
     private SocketData s = null;
@@ -35,7 +35,7 @@ public class ServerContent extends JPanel implements Runnable {
 	    textOutput.append(i + ":" + geefPort() + '\n');
 	    this.s = new SocketData(sock);
 	    Date date = new Date();
-	    logger.addText("Server started on: " + ServerLog.format.format(date) + " on IP:" + i + ":" + geefPort());
+	    logger.addText("Server started on: " + ServerLog.format.format(date) + " on IP: " + i + ":" + geefPort());
 	    
 	} catch (IOException e) {
 	    e.printStackTrace();
@@ -49,16 +49,6 @@ public class ServerContent extends JPanel implements Runnable {
 	} else {
 	    return -1;
 	}
-    }
-    
-    @Override
-    public void run() {
-	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public void paintComponent(Graphics g) {
-	super.paintComponent(g);
-	Graphics2D g2 = (Graphics2D) g;
     }
     
     public void sluitLogger() {

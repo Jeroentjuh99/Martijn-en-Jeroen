@@ -5,18 +5,33 @@
  */
 package ServerContent;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
 import java.net.*;
 
 /**
  *
  * @author jeroen
  */
-public class HandleAClient {
+public class HandleAClient implements ActionListener{
 
-    private Socket socket;
-    
-    public HandleAClient(Socket socket) {
+    private final Socket socket;
+    private final DataInputStream inputfromClient;
+    private final DataOutputStream outputToClient;
+
+    public HandleAClient(Socket socket) throws IOException {
 	this.socket = socket;
+	this.inputfromClient = new DataInputStream(socket.getInputStream());
+	this.outputToClient = new DataOutputStream(socket.getOutputStream());
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+	
+    }
+    
+    public void checkAlive(){
 	
     }
 }
