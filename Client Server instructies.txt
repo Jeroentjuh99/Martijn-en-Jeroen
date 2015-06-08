@@ -1,16 +1,14 @@
-Server:
-	client, ben je er nog?
-	client, heb je nog nieuwe texten voor me?
-	client, hier heb je alle berichten tussen de laatste keer dat ik het vroeg en nu
+S = String
+B = boolean
 
-	1x per seconde oid vragen
-	alle berichten naar een txt bestand schrijven
+Client naar server: 
+S /gebruikersnaam Martijn
+S /say de_tekst_die_in_het_scherm_ingetypt_is
+S /ip ip
+B /alive isAlive
 
-Client:
-	gebruikersnaam:\nBericht\n\n
-	voor client gereed maken
-	bericht vergeten wanneer verzonden
-	alle berichten bovenin weergeven
-
-
-tussen server en client een bepaalde "code" maken om te kijken of de verbinding er nog is
+Server naar Client: 
+S /isAlive
+S /hasNewMessage
+S /say de_message_die_zichtbaar_moet_worden
+S /shutdown
