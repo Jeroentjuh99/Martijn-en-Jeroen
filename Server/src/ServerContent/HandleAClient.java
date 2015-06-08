@@ -17,12 +17,11 @@ public class HandleAClient {
     private final Socket socket;
     private final DataInputStream inputfromClient;
     private final DataOutputStream outputToClient;
-    private byte ticks = 0;
 
     public HandleAClient(Socket socket) throws IOException {
 	this.socket = socket;
 	this.inputfromClient = new DataInputStream(socket.getInputStream());
 	this.outputToClient = new DataOutputStream(socket.getOutputStream());
-
     }
 }
+//socket.setSoTimeout(5000); voor elke readAlive
