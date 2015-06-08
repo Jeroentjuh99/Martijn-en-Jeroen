@@ -38,7 +38,7 @@ public class Main extends JFrame {
 		{
 		setSize(600, 800);
 		JPanel backgroundSouth = new JPanel(new FlowLayout(FlowLayout.LEFT));
-//		JPanel panel = new JPanel();
+		JPanel panel = new JPanel();
 		//JTextArea chat = new JTextArea();
 		//chat.setSize(panel.getWidth(), panel.getHeight());
 		System.out.println(panel.getWidth());
