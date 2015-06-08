@@ -19,10 +19,12 @@ public class Menu extends JPanel {
 	private ServerConnection server;
 	protected String gebruikersnaam1;
 	protected ArrayList<JTextArea> berichten = new ArrayList();
+	private JPanel panel;
 
 	public Menu(Main main, JPanel panel) {
 		this.main = main;
-		server= new ServerConnection(this, panel);
+		this.panel = panel;
+//		server= new ServerConnection(this, panel);
 	}
 	public JButton Send(final JTextArea bericht) {
 		JButton Send = new JButton("Send");
@@ -65,6 +67,7 @@ public class Menu extends JPanel {
 				this.gebruikersnaam1= gebruikersnaam.getText();
 				if(server.serverConnection(gebruikersnaam.getText(),ipadres.getText()))
 				{
+					server= new ServerConnection(this, panel);
 					return true;
 				}
 				else

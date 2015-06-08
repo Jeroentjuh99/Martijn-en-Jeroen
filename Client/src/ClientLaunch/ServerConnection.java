@@ -1,9 +1,10 @@
 package ClientLaunch;
 
 import java.io.*;
-import java.net.Socket;
+import java.net.*;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class ServerConnection implements Runnable{
@@ -13,7 +14,7 @@ public class ServerConnection implements Runnable{
 	private String[] ip;
 	private DataOutputStream toServer;
 	private DataInputStream fromServer;
-
+//	private InetAddress Localip = getLocalHost();
 	public ServerConnection(Menu menu, JPanel p) {
 		this.menu = menu;
 		this.panel = p;
@@ -36,23 +37,47 @@ public class ServerConnection implements Runnable{
 		String text=null;
 		try {
 			text = fromServer.readUTF();
-			if(text.equals("leef je nog woord"))
+			if(text.isEmpty())
+			{
+				return;
+			}
+			else if(text.startsWith("/isAlive "))
 			{
 				ikLeefNog();
+				toServer.flush();
 			}
-			else if(text.equalsIgnoreCase("/gebruikersnaam"))
+			else if(text.startsWith("/gebruikersnaam "))
 			{
 				sendMessage("/gebruikersnaam "+menu.gebruikersnaam1);
+				toServer.flush();
 			}
-			else if(text.equalsIgnoreCase("/"))
+			else if(text.startsWith("/hasNewMessage "))
 			{
-				
+				if(menu.berichten.isEmpty())
+				{
+					sendMessage("/hasNoMessage");
+					toServer.flush();
+				}
+				else
+				{
+					for(int i=0;i<menu.berichten.size();i++)
+					{
+						sendMessage("/say "+menu.berichten.get(i).getText());
+						toServer.flush();
+					}
+					menu.berichten.clear();
+				}
 			}
-			else if(!text.isEmpty())
+			else if(text.startsWith("/ip "))
 			{
-			JLabel message = new JLabel();
-			message.setText(text);
-			panel.add(message);
+				sendMessage("/ip "+ InetAddress.getLocalHost().getHostAddress());
+				toServer.flush();
+			}
+			else if(text.startsWith("/shutdown"))
+			{
+				JOptionPane
+				.showMessageDialog(null,
+						"De server heeft de connectie verbroken");
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
