@@ -60,6 +60,9 @@ public class Main extends JFrame {
 		
 //		ServerConnection c = new ServerConnection(menu, panel);
 		}
+		else{
+			System.exit(0);
+		}
 	}
 	
 	public void volgendeRegel(final JTextArea bericht)
