@@ -7,6 +7,8 @@ package ServerContent;
 
 import java.io.*;
 import java.net.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,8 +22,26 @@ public class HandleAClient {
 
     public HandleAClient(Socket socket) throws IOException {
 	this.socket = socket;
+	socket.setSoTimeout(5000);
 	this.inputfromClient = new DataInputStream(socket.getInputStream());
 	this.outputToClient = new DataOutputStream(socket.getOutputStream());
     }
+
+    public void checkAlive() {
+	try {
+	    outputToClient.writeUTF("/isAlive");
+	    new Thread(new Runnable() {
+		@Override
+		public void run() {
+		    try {
+			boolean b = inputfromClient.readBoolean();
+		    } catch (IOException ex) {
+			Logger.getLogger(HandleAClient.class.getName()).log(Level.SEVERE, null, ex);
+		    }
+		}
+	    }).start();
+	} catch (IOException ex) {
+	    Logger.getLogger(HandleAClient.class.getName()).log(Level.SEVERE, null, ex);
+	}
+    }
 }
-//socket.setSoTimeout(5000); voor elke readAlive
