@@ -26,6 +26,7 @@ import javax.swing.JTextField;
  */
 public class Main extends JFrame {
 	private JPanel panel = new JPanel();
+	private JTextArea ontvangenBerichten = new JTextArea(41,52); 
 	public static void main(String[] args) {
 		Main m = new Main();
 
@@ -33,14 +34,13 @@ public class Main extends JFrame {
 
 	public Main() {
 		super("Windows Live Messenger");
-		Menu menu = new Menu(this,panel);
+		Menu menu = new Menu(this,ontvangenBerichten);
 		if(menu.login())
 		{
 		setSize(600, 800);
 		JPanel backgroundSouth = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JTextArea bericht = new JTextArea(5,40); 
 		volgendeRegel(bericht);
-		JTextArea ontvangenBerichten = new JTextArea(41,52); 
 		ontvangenBerichten.setEditable(false);
 		volgendeRegel(ontvangenBerichten);
 		JScrollPane scrollen = new JScrollPane(bericht, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -51,7 +51,7 @@ public class Main extends JFrame {
 //		JButton button = menu.Send(bericht);
 //		backgroundSouth.add(button);
 //		getRootPane().setDefaultButton(button);
-		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		backgroundSouth.setBorder(BorderFactory.createLineBorder(Color.orange,5));
 		add(backgroundSouth, BorderLayout.SOUTH);
 		getContentPane().add(panel);

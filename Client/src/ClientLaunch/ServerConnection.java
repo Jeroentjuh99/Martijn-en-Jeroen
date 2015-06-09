@@ -11,14 +11,14 @@ import javax.swing.JTextArea;
 public class ServerConnection implements Runnable{
 
 	private Menu menu;
-	private JPanel panel;
+	private JTextArea berichtenVenster;
 	private String[] ip;
 	private DataOutputStream toServer;
 	private DataInputStream fromServer;
 //	private InetAddress Localip = getLocalHost();
-	public ServerConnection(Menu menu, JPanel p) {
+	public ServerConnection(Menu menu, JTextArea p) {
 		this.menu = menu;
-		this.panel = p;
+		this.berichtenVenster = p;
 		
 		
 		Thread t = new Thread(this);
@@ -36,8 +36,10 @@ public class ServerConnection implements Runnable{
 
 	public void getMessage() {
 		String text=null;
+		System.out.println("Check");
 		try {
 			text = fromServer.readUTF();
+			System.err.println(text);
 			if(text.isEmpty())
 			{
 				System.out.println("niks gekregen");
@@ -45,15 +47,17 @@ public class ServerConnection implements Runnable{
 			}
 			else if(text.startsWith("/say "))
 			{
-				JTextArea message = new JTextArea(5,50);
-				message.setText(text.substring(4, text.length()-1));
-				message.setWrapStyleWord(true);
-				message.setLineWrap(true);
-				//message.
-				panel.add(message);
+//				JTextArea message = new JTextArea(5,50);
+//				message.setText(text.substring(4, text.length()-1));
+//				message.setWrapStyleWord(true);
+//				message.setLineWrap(true);
+//				//message.
+				berichtenVenster.setText(text.substring(4, text.length()-1));
+				berichtenVenster.setText("/n");
 			}
 			else if(text.startsWith("/isAlive "))
 			{
+				System.out.println("ik leef nog");
 				ikLeefNog();
 				toServer.flush();
 			}
@@ -92,6 +96,7 @@ public class ServerConnection implements Runnable{
 						"De server heeft de connectie verbroken");
 			}
 		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 	

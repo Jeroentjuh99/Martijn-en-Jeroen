@@ -21,7 +21,7 @@ public class Menu extends JPanel {
 	protected ArrayList<JTextArea> berichten = new ArrayList();
 //	private JPanel panel;
 
-	public Menu(Main main, JPanel panel) {
+	public Menu(Main main, JTextArea panel) {
 		this.main = main;
 //		this.panel = panel;
 		server= new ServerConnection(this, panel);
