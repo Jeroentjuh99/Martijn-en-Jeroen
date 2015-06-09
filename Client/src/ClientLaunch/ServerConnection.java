@@ -55,7 +55,7 @@ public class ServerConnection implements Runnable{
 				berichtenVenster.setText(text.substring(4, text.length()-1));
 				berichtenVenster.setText("/n");
 			}
-			else if(text.startsWith("/isAlive "))
+			else if(text.startsWith("/isAlive"))
 			{
 				System.out.println("ik leef nog");
 				ikLeefNog();

@@ -30,11 +30,13 @@ public class HandleAClient {
     public void checkAlive() {
 	try {
 	    outputToClient.writeUTF("/isAlive");
+	    System.out.println("hallo");
 	    new Thread(new Runnable() {
 		@Override
 		public void run() {
 		    try {
 			boolean b = inputfromClient.readBoolean();
+			System.out.println(b);
 		    } catch (IOException ex) {
 			Logger.getLogger(HandleAClient.class.getName()).log(Level.SEVERE, null, ex);
 		    }
