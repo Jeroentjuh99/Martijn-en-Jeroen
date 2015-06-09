@@ -15,6 +15,7 @@ public class ServerConnection implements Runnable{
 	private String[] ip;
 	private DataOutputStream toServer;
 	private DataInputStream fromServer;
+	private int niksontvangen;
 //	private InetAddress Localip = getLocalHost();
 	public ServerConnection(Menu menu, JTextArea p) {
 		this.menu = menu;
@@ -95,8 +96,11 @@ public class ServerConnection implements Runnable{
 				.showMessageDialog(null,
 						"De server heeft de connectie verbroken");
 			}
+		} catch (SocketTimeoutException e){
+			JOptionPane.showMessageDialog(null, "Het serveradres is niet meer berijkbaar");
+			System.exit(0);
 		} catch (Exception ex) {
-			ex.printStackTrace();
+	//		ex.printStackTrace();
 		}
 	}
 	
@@ -113,6 +117,7 @@ public class ServerConnection implements Runnable{
 		try {
 			ip = ipadres.split(";");
 			Socket socket = new Socket(ip[0], Integer.parseInt(ip[1]));
+			socket.setSoTimeout(5000);
 			// Create an input stream to receive data from the server
 			 fromServer = new DataInputStream(
 			 socket.getInputStream());
@@ -140,7 +145,6 @@ public class ServerConnection implements Runnable{
 	public void run() {
 		while(true){	
 			try {
-				
 				getMessage();
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
