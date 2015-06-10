@@ -21,9 +21,6 @@ public class ServerConnection implements Runnable{
 	public ServerConnection(Menu menu, JTextArea p) {
 		this.menu = menu;
 		this.berichtenVenster = p;
-		
-		
-
 	}
 	
 	public void startThread()
@@ -58,8 +55,10 @@ public class ServerConnection implements Runnable{
 //				message.setWrapStyleWord(true);
 //				message.setLineWrap(true);
 //				//message.
-				berichtenVenster.setText(text.substring(4, text.length()-1));
-				berichtenVenster.setText("/n");
+				berichtenVenster.append(text.substring(4, text.length()));
+				berichtenVenster.append("\n\n");
+				berichtenVenster.setWrapStyleWord(true);
+				berichtenVenster.setLineWrap(true);
 			}
 			else if(text.startsWith("/isAlive"))
 			{
@@ -86,9 +85,9 @@ public class ServerConnection implements Runnable{
 					aantalBerichten(menu.berichten.size());
 					for(int i=0;i<menu.berichten.size();i++)
 					{
-						sendMessage("/say "+menu.gebruikersnaam1+": "+menu.berichten.get(i).getText());
+						sendMessage("/say "+menu.gebruikersnaam1+": "+menu.berichten.get(i));
 						toServer.flush();
-						System.out.println("/say "+menu.gebruikersnaam1+": "+menu.berichten.get(i).getText());
+						System.out.println("/say "+menu.gebruikersnaam1+": "+menu.berichten.get(i));
 					}
 					menu.berichten.clear();
 				}
@@ -108,7 +107,14 @@ public class ServerConnection implements Runnable{
 		} catch (SocketTimeoutException e){
 			JOptionPane.showMessageDialog(null, "Het serveradres is niet meer berijkbaar");
 			System.exit(0);
-		} catch (NullPointerException ex) {
+		} catch (NullPointerException e) {
+			geenServerreactie++;
+			if(geenServerreactie>20)
+			{
+				JOptionPane.showMessageDialog(null, "Het serveradres is niet meer berijkbaar");
+				System.exit(0);
+			}
+		} catch (SocketException e) {
 			geenServerreactie++;
 			if(geenServerreactie>20)
 			{

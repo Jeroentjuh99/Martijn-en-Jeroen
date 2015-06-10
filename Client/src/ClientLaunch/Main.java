@@ -10,6 +10,7 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javafx.scene.input.KeyCode;
 
@@ -70,18 +71,37 @@ public class Main extends JFrame {
 	
 	public void volgendeRegel(final JTextArea bericht)
 	{
-		bericht.addKeyListener(new KeyAdapter() {
+		bericht.addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
-				 if (e.getKeyCode() == KeyEvent.VK_ENTER)  {
-					 e.consume();
-					 menu.Send(bericht);
-				 }
-//				System.err.print(e.getKeyCode());
-//				System.out.print(KeyEvent.VK_ENTER);
 				bericht.setWrapStyleWord(true);
 				bericht.setLineWrap(true);
 			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER)  {
+					 menu.Sendbericht(bericht);
+					 e.consume();
+				 }
+				
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
 		});
+	}
+	public void volgendeRegelB(final JTextArea ontvangenBerichten)
+	{
+		ontvangenBerichten.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				ontvangenBerichten.setWrapStyleWord(true);
+				ontvangenBerichten.setLineWrap(true);
+			}
+		
+	});
 	}
 
 

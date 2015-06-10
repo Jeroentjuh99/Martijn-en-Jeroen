@@ -18,7 +18,7 @@ public class Menu extends JPanel {
 	private Main main;
 	private ServerConnection server;
 	protected String gebruikersnaam1;
-	protected ArrayList<JTextArea> berichten = new ArrayList();
+	protected ArrayList<String> berichten = new ArrayList();
 //	private JPanel panel;
 
 	public Menu(Main main, JTextArea panel) {
@@ -33,12 +33,18 @@ public class Menu extends JPanel {
 				if(!(bericht.getText().isEmpty()))
 				{
 					System.out.println(bericht.getText());
-					berichten.add(bericht);
+					berichten.add(bericht.getText());
 					bericht.setText(null);
 				}
 			}
 		});
 		return Send;
+	}
+	
+	public void Sendbericht(JTextArea bericht1)
+	{
+		berichten.add(bericht1.getText());
+		bericht1.setText(null);
 	}
 	
 	
