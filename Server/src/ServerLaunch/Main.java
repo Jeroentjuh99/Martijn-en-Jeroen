@@ -25,7 +25,6 @@ public class Main extends JFrame {
 		Main main = new Main();
 	    }
 	});
-
     }
 
     public Main() {
