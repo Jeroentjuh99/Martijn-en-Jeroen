@@ -31,7 +31,7 @@ public class SocketData implements Runnable {
 
 	    try {
 		Socket socket = sock.accept();
-		sockets.add(new HandleAClient(socket));
+		sockets.add(new HandleAClient(socket, this));
 		Thread.sleep((long) 1000);
 	    } catch (Exception ex) {
 		Logger.getLogger(SocketData.class.getName()).log(Level.SEVERE, null, ex);

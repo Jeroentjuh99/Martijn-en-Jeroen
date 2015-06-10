@@ -20,9 +20,11 @@ public class HandleAClient implements Runnable{
     private final DataInputStream inputfromClient;
     private final DataOutputStream outputToClient;
     protected ArrayList<String> messages = new ArrayList();
+    private final SocketData data;
 
-    public HandleAClient(Socket socket) throws IOException {
+    public HandleAClient(Socket socket, SocketData data) throws IOException {
 	this.socket = socket;
+	this.data = data;
 	socket.setSoTimeout(5000);
 	this.inputfromClient = new DataInputStream(socket.getInputStream());
 	this.outputToClient = new DataOutputStream(socket.getOutputStream());
@@ -39,7 +41,14 @@ public class HandleAClient implements Runnable{
 	    outputToClient.writeUTF("/hasNewMessage");
 	    int i = inputfromClient.readInt();
 	    while (i > 0){
-		messages.add(inputfromClient.readUTF());
+		String a = inputfromClient.readUTF();
+		for(HandleAClient client : data.sockets){
+		    client.messages.add(a);
+		}
+	    }
+	    
+	    for(String a : messages){
+		outputToClient.writeUTF("/say " + a);
 	    }
 	    
 	} catch (IOException ex) {
