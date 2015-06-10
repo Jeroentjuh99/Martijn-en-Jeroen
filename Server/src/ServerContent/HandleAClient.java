@@ -46,10 +46,11 @@ public class HandleAClient implements Runnable{
 		    client.messages.add(a);
 		}
 	    }
-	    
+	    if(!messages.isEmpty())
 	    for(String a : messages){
 		outputToClient.writeUTF(a);
 	    }
+	    messages.clear();
 	    
 	} catch (IOException ex) {
 	    Logger.getLogger(HandleAClient.class.getName()).log(Level.SEVERE, null, ex);
