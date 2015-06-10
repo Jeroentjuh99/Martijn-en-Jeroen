@@ -48,7 +48,7 @@ public class HandleAClient implements Runnable{
 	    }
 	    
 	    for(String a : messages){
-		outputToClient.writeUTF("/say " + a);
+		outputToClient.writeUTF(a);
 	    }
 	    
 	} catch (IOException ex) {
