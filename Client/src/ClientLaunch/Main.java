@@ -6,9 +6,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import javafx.scene.input.KeyCode;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -27,6 +30,7 @@ import javax.swing.JTextField;
 public class Main extends JFrame {
 	private JPanel panel = new JPanel();
 	private JTextArea ontvangenBerichten = new JTextArea(41,52); 
+	private Menu menu = new Menu(this,ontvangenBerichten);
 	public static void main(String[] args) {
 		Main m = new Main();
 
@@ -34,7 +38,6 @@ public class Main extends JFrame {
 
 	public Main() {
 		super("Windows Live Messenger");
-		Menu menu = new Menu(this,ontvangenBerichten);
 		if(menu.login())
 		{
 		setSize(600, 800);
@@ -69,11 +72,16 @@ public class Main extends JFrame {
 	{
 		bericht.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
+				 if (e.getKeyCode() == KeyEvent.VK_ENTER)  {
+					 e.consume();
+					 menu.Send(bericht);
+				 }
+				 System.err.print(e.getKeyCode());
+				// System.out.print(KeyEvent.VK_ENTER);
 				bericht.setWrapStyleWord(true);
 				bericht.setLineWrap(true);
 			}
 		});
-
 	}
 
 

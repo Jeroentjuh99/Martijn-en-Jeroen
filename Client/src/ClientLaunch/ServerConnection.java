@@ -67,15 +67,17 @@ public class ServerConnection implements Runnable{
 				sendMessage("/gebruikersnaam "+menu.gebruikersnaam1);
 				toServer.flush();
 			}
-			else if(text.startsWith("/hasNewMessage "))
+			else if(text.startsWith("/hasNewMessage"))
 			{
 				if(menu.berichten.isEmpty())
 				{
-					sendMessage("/hasNoMessage");
+					System.out.println("geenBerichten");
+					aantalBerichten(0);
 					toServer.flush();
 				}
 				else
 				{
+					aantalBerichten(menu.berichten.size());
 					for(int i=0;i<menu.berichten.size();i++)
 					{
 						sendMessage("/say "+menu.gebruikersnaam1+": "+menu.berichten.get(i).getText());
@@ -100,7 +102,7 @@ public class ServerConnection implements Runnable{
 			JOptionPane.showMessageDialog(null, "Het serveradres is niet meer berijkbaar");
 			System.exit(0);
 		} catch (Exception ex) {
-	//		ex.printStackTrace();
+//			ex.printStackTrace();
 		}
 	}
 	
@@ -111,13 +113,21 @@ public class ServerConnection implements Runnable{
 			e.printStackTrace();
 		}
 	}
+	
+	public void aantalBerichten(int hoeveelheid){
+	try {
+		toServer.writeInt(hoeveelheid);;;
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+}
 
 	public boolean serverConnection(String gebruikersnaam, String ipadres) {
 		boolean connectie = false;
 		try {
 			ip = ipadres.split(";");
 			Socket socket = new Socket(ip[0], Integer.parseInt(ip[1]));
-			socket.setSoTimeout(5000);
+			socket.setSoTimeout(10000);
 			// Create an input stream to receive data from the server
 			 fromServer = new DataInputStream(
 			 socket.getInputStream());

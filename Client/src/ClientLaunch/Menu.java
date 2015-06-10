@@ -46,6 +46,8 @@ public class Menu extends JPanel {
 	{
 		JTextField gebruikersnaam = new JTextField();
 		JTextField ipadres = new JTextField();
+		gebruikersnaam.setText("gebruikersnaam");
+		ipadres.setText("145.48.114.219;56231");
 		ipadres.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
