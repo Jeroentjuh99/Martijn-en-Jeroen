@@ -16,6 +16,7 @@ public class ServerConnection implements Runnable{
 	private DataOutputStream toServer;
 	private DataInputStream fromServer;
 	private int niksontvangen;
+	private int geenServerreactie;
 //	private InetAddress Localip = getLocalHost();
 	public ServerConnection(Menu menu, JTextArea p) {
 		this.menu = menu;
@@ -61,6 +62,7 @@ public class ServerConnection implements Runnable{
 				System.out.println("ik leef nog");
 				ikLeefNog();
 				toServer.flush();
+				geenServerreactie=0;
 			}
 			else if(text.startsWith("/gebruikersnaam "))
 			{
@@ -97,12 +99,20 @@ public class ServerConnection implements Runnable{
 				JOptionPane
 				.showMessageDialog(null,
 						"De server heeft de connectie verbroken");
+				System.exit(0);
 			}
 		} catch (SocketTimeoutException e){
 			JOptionPane.showMessageDialog(null, "Het serveradres is niet meer berijkbaar");
 			System.exit(0);
+		} catch (NullPointerException ex) {
+			geenServerreactie++;
+			if(geenServerreactie>20)
+			{
+				JOptionPane.showMessageDialog(null, "Het serveradres is niet meer berijkbaar");
+				System.exit(0);
+			}
 		} catch (Exception ex) {
-//			ex.printStackTrace();
+			ex.printStackTrace();
 		}
 	}
 	

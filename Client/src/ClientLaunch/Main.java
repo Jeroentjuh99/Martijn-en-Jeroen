@@ -76,8 +76,8 @@ public class Main extends JFrame {
 					 e.consume();
 					 menu.Send(bericht);
 				 }
-				 System.err.print(e.getKeyCode());
-				// System.out.print(KeyEvent.VK_ENTER);
+//				System.err.print(e.getKeyCode());
+//				System.out.print(KeyEvent.VK_ENTER);
 				bericht.setWrapStyleWord(true);
 				bericht.setLineWrap(true);
 			}
