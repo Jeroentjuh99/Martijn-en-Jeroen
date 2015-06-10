@@ -33,23 +33,37 @@ public class Client implements Runnable {
 	try {
 	    this.input = new DataInputStream(socket.getInputStream());
 	    this.output = new DataOutputStream(socket.getOutputStream());
-	    
+
 	    output.writeUTF("/gebruikersnaam");
 	    this.clientName = input.readUTF().substring(16);
-	    
-	    while(true){
+
+	    synchronized (this) {
+		for (int i = 0; i < maxClients; i++) {
+		    if (clients[i] != null && clients[i] == this) {
+			clientName = clientName;
+			break;
+		    }
+		}
+		for (int i = 0; i < maxClients; i++) {
+		    if (clients[i] != null && clients[i] != this) {
+			clients[i].output.writeUTF("/say " + clientName + " just joined the chat!");
+		    }
+		}
+	    }
+
+	    while (true) {
 		String text = input.readUTF();
-		synchronized(this){
-		    for(int i = 0; i < maxClients; i++){
-			if(!(clients[i] == null)){
+		synchronized (this) {
+		    for (int i = 0; i < maxClients; i++) {
+			if (!(clients[i] == null)) {
 			    clients[i].output.writeUTF(text);
 			}
 		    }
 		}
 	    }
-	    
+
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
-    }    
+    }
 }

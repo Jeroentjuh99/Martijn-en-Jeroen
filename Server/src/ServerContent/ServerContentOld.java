@@ -36,7 +36,7 @@ public class ServerContentOld extends JPanel implements Runnable {
 	    textOutput.append(i + ":" + geefPort() + '\n');
 	    this.s = new SocketData(sock);
 	    Date date = new Date();
-	    logger.addText("Server started on: " + ServerLog.format.format(date) + " on IP: " + i + ":" + geefPort());
+//	    logger.addText("Server started on: " + ServerLog.format.format(date) + " on IP: " + i + ":" + geefPort());
 
 	    Thread t = new Thread(this);
 	    t.start();

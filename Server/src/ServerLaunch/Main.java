@@ -84,16 +84,7 @@ public class Main extends JFrame {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	    String a = textIn.getText();
-//	    s.logText(a);
-//	    if (a.equalsIgnoreCase("/shutdown")) {
-//		s.sluitLogger();
-//		System.exit(0);
-//	    } else if (a.equalsIgnoreCase("/ip")) {
-//		s.showTextFromCommand("ip");
-//	    } else if (a.startsWith("/say ")){
-//		s.showTextFromCommand(a);
-//	    }
-//
+	    s.handleCommand(a);
 	    textIn.setText(null);
 	}
     }

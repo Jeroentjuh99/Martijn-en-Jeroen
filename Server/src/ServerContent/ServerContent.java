@@ -32,22 +32,49 @@ public class ServerContent implements Runnable {
 	    writeToScreen(InetAddress.getLocalHost() + ":" + server.getLocalPort());
 	    this.logger = new ServerLog();
 	    logger.addText("IP: " + InetAddress.getLocalHost() + ":" + server.getLocalPort());
+
+	    Thread t = new Thread(this);
+	    t.start();
 	} catch (IOException e) {
 	    System.err.println("Server could not be opened on this port");
 	    System.exit(0);
 	}
     }
-    
-    public void writeToScreen(String text){
+
+    public void writeToScreen(String text) {
 	textOut.append(text + '\n');
     }
-    
-    public void logText(String text){
+
+    public void logText(String text) {
 	logger.addText(text);
     }
-    
-    public void closeLog(){
+
+    public void handleCommand(String text) {
+	if (text.equalsIgnoreCase("/shutdown")) {
+	    validCommand(text);
+	    closeLog();
+	    System.exit(0);
+	} else if (text.equalsIgnoreCase("/ip")) {
+	    try {
+		validCommand(text);
+		writeToScreen("IP: " + InetAddress.getLocalHost() + ":" + server.getLocalPort());
+		logText(InetAddress.getLocalHost() + ":" + server.getLocalPort());
+	    } catch (UnknownHostException ex) {
+		Logger.getLogger(ServerContent.class.getName()).log(Level.SEVERE, null, ex);
+	    }
+	} else if(text.startsWith("/say ")){
+	    validCommand(text);
+	    
+	}
+    }
+
+    public void closeLog() {
 	logger.closeFile();
+    }
+
+    private void validCommand(String t) {
+	writeToScreen(t);
+	logText(t);
     }
 
     @Override
