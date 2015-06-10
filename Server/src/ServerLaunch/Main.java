@@ -87,6 +87,8 @@ public class Main extends JFrame {
 		System.exit(0);
 	    } else if (a.equalsIgnoreCase("/ip")) {
 		s.showTextFromCommand("ip");
+	    } else if (a.startsWith("/say ")){
+		s.showTextFromCommand(a);
 	    }
 
 	    textIn.setText(null);

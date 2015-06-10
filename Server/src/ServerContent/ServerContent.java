@@ -37,7 +37,7 @@ public class ServerContent extends JPanel implements Runnable {
 	    this.s = new SocketData(sock);
 	    Date date = new Date();
 	    logger.addText("Server started on: " + ServerLog.format.format(date) + " on IP: " + i + ":" + geefPort());
-	    
+
 	    Thread t = new Thread(this);
 	    t.start();
 	} catch (IOException e) {
@@ -69,6 +69,8 @@ public class ServerContent extends JPanel implements Runnable {
 		logText("IP: " + getLocalHost() + ':' + geefPort());
 	    } catch (IOException e) {
 	    }
+	} else if (text.startsWith("/say ")) {
+	    logText(text);
 	}
     }
 
