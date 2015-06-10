@@ -33,8 +33,8 @@ public class Menu extends JPanel {
 				if(!(bericht.getText().isEmpty()))
 				{
 					System.out.println(bericht.getText());
-					bericht.setText(null);
 					berichten.add(bericht);
+					bericht.setText(null);
 				}
 			}
 		});
@@ -47,7 +47,7 @@ public class Menu extends JPanel {
 		JTextField gebruikersnaam = new JTextField();
 		JTextField ipadres = new JTextField();
 		gebruikersnaam.setText("gebruikersnaam");
-		ipadres.setText("145.48.114.219;56231");
+		ipadres.setText("145.48.114.219;");
 		ipadres.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
@@ -73,6 +73,7 @@ public class Menu extends JPanel {
 				if(server.serverConnection(gebruikersnaam.getText(),ipadres.getText()))
 				{
 //					server= new ServerConnection(this, panel);
+					server.startThread();
 					return true;
 				}
 				else

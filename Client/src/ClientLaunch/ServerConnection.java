@@ -23,10 +23,14 @@ public class ServerConnection implements Runnable{
 		this.berichtenVenster = p;
 		
 		
+
+	}
+	
+	public void startThread()
+	{
 		Thread t = new Thread(this);
 		t.start();
 	}
-	
 
 	public void sendMessage(String message) {
 		try {
@@ -84,7 +88,7 @@ public class ServerConnection implements Runnable{
 					{
 						sendMessage("/say "+menu.gebruikersnaam1+": "+menu.berichten.get(i).getText());
 						toServer.flush();
-						System.out.println("bericht verstuurd");
+						System.out.println("/say "+menu.gebruikersnaam1+": "+menu.berichten.get(i).getText());
 					}
 					menu.berichten.clear();
 				}
