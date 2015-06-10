@@ -8,14 +8,17 @@ package ServerContent;
 import java.io.IOException;
 import java.net.*;
 import static java.net.InetAddress.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
  *
  * @author jeroen
  */
-public class ServerContent extends JPanel {
+public class ServerContent extends JPanel implements Runnable {
 
     private ServerSocket sock = null;
     private SocketData s = null;
@@ -34,7 +37,9 @@ public class ServerContent extends JPanel {
 	    this.s = new SocketData(sock);
 	    Date date = new Date();
 	    logger.addText("Server started on: " + ServerLog.format.format(date) + " on IP: " + i + ":" + geefPort());
-
+	    
+	    Thread t = new Thread(this);
+	    t.start();
 	} catch (IOException e) {
 	    e.printStackTrace();
 	    System.exit(0);
@@ -63,6 +68,20 @@ public class ServerContent extends JPanel {
 	    try {
 		logText("IP: " + getLocalHost() + ':' + geefPort());
 	    } catch (IOException e) {
+	    }
+	}
+    }
+
+    @Override
+    public void run() {
+	while (true) {
+	    try {
+		for (HandleAClient client : s.sockets) {
+		    client.doYourThing();
+		}
+		Thread.sleep(1000);
+	    } catch (InterruptedException ex) {
+		Logger.getLogger(ServerContent.class.getName()).log(Level.SEVERE, null, ex);
 	    }
 	}
     }

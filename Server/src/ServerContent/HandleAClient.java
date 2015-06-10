@@ -7,18 +7,19 @@ package ServerContent;
 
 import java.io.*;
 import java.net.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.logging.*;
 
 /**
  *
  * @author jeroen
  */
-public class HandleAClient {
+public class HandleAClient implements Runnable{
 
     private final Socket socket;
     private final DataInputStream inputfromClient;
     private final DataOutputStream outputToClient;
+    protected ArrayList<String> messages = new ArrayList();
 
     public HandleAClient(Socket socket) throws IOException {
 	this.socket = socket;
@@ -27,21 +28,20 @@ public class HandleAClient {
 	this.outputToClient = new DataOutputStream(socket.getOutputStream());
     }
 
-    public void checkAlive() {
+    public void doYourThing(){
+	Thread t = new Thread(this);
+	t.start();
+    }
+    
+    @Override
+    public void run(){
 	try {
-	    outputToClient.writeUTF("/isAlive");
-	    System.out.println("hallo");
-	    new Thread(new Runnable() {
-		@Override
-		public void run() {
-		    try {
-			boolean b = inputfromClient.readBoolean();
-			System.out.println(b);
-		    } catch (IOException ex) {
-			Logger.getLogger(HandleAClient.class.getName()).log(Level.SEVERE, null, ex);
-		    }
-		}
-	    }).start();
+	    outputToClient.writeUTF("/hasNewMessage");
+	    int i = inputfromClient.readInt();
+	    while (i > 0){
+		messages.add(inputfromClient.readUTF());
+	    }
+	    
 	} catch (IOException ex) {
 	    Logger.getLogger(HandleAClient.class.getName()).log(Level.SEVERE, null, ex);
 	}

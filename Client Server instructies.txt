@@ -5,10 +5,9 @@ Client naar server:
 S /gebruikersnaam Martijn
 S /say de_tekst_die_in_het_scherm_ingetypt_is
 S /ip ip
-B /alive isAlive
+I hoeveelheid messages
 
 Server naar Client: 
-S /isAlive
 S /hasNewMessage
 S /say de_message_die_zichtbaar_moet_worden
 S /shutdown
