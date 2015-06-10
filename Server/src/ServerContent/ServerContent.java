@@ -5,11 +5,10 @@
  */
 package ServerContent;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
-import static java.net.InetAddress.*;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -18,71 +17,59 @@ import javax.swing.*;
  *
  * @author jeroen
  */
-public class ServerContent extends JPanel implements Runnable {
+public class ServerContent implements Runnable {
 
-    private ServerSocket sock = null;
-    private SocketData s = null;
-    private JTextArea textOutput;
-    private JTextField textInput;
+    private final JTextArea textOut;
+    private ServerSocket server = null;
+    private int maxClients = 10;
+    private Client[] clients = new Client[maxClients];
     private ServerLog logger;
 
-    public ServerContent(JTextArea textOutput, JTextField textInput) {
+    public ServerContent(JTextArea textOut) {
+	this.textOut = textOut;
 	try {
-	    this.sock = new ServerSocket(0);
-	    this.textOutput = textOutput;
-	    this.textInput = textInput;
+	    this.server = new ServerSocket(0);
+	    writeToScreen(InetAddress.getLocalHost() + ":" + server.getLocalPort());
 	    this.logger = new ServerLog();
-	    InetAddress i = getLocalHost();
-	    textOutput.append(i + ":" + geefPort() + '\n');
-	    this.s = new SocketData(sock);
-	    Date date = new Date();
-	    logger.addText("Server started on: " + ServerLog.format.format(date) + " on IP: " + i + ":" + geefPort());
-
-	    Thread t = new Thread(this);
-	    t.start();
+	    logger.addText("IP: " + InetAddress.getLocalHost() + ":" + server.getLocalPort());
 	} catch (IOException e) {
-	    e.printStackTrace();
+	    System.err.println("Server could not be opened on this port");
 	    System.exit(0);
 	}
     }
-
-    private int geefPort() {
-	if (!(sock == null)) {
-	    return sock.getLocalPort();
-	} else {
-	    return -1;
-	}
+    
+    public void writeToScreen(String text){
+	textOut.append(text + '\n');
     }
-
-    public void sluitLogger() {
-	logger.closeFile();
-    }
-
-    public void logText(String text) {
-	textOutput.append(text + '\n');
+    
+    public void logText(String text){
 	logger.addText(text);
     }
-
-    public void showTextFromCommand(String text) {
-	if (text.equalsIgnoreCase("ip")) {
-	    try {
-		logText("IP: " + getLocalHost() + ':' + geefPort());
-	    } catch (IOException e) {
-	    }
-	} else if (text.startsWith("/say ")) {
-	    logText(text);
-	}
+    
+    public void closeLog(){
+	logger.closeFile();
     }
 
     @Override
     public void run() {
 	while (true) {
 	    try {
-		for (HandleAClient client : s.sockets) {
-		    client.doYourThing();
+		int i = 0;
+		Socket socket = server.accept();
+		for (i = 0; i < maxClients; i++) {
+		    if (clients[i] == null) {
+			clients[i] = new Client(socket, clients);
+			break;
+		    }
 		}
-		Thread.sleep(1000);
-	    } catch (InterruptedException ex) {
+		if (i == maxClients) {
+		    DataOutputStream d = new DataOutputStream(socket.getOutputStream());
+		    d.writeUTF("/say Server is too busy, please try again later");
+		    d.writeUTF("/shutdown");
+		    d.close();
+		    socket.close();
+		}
+	    } catch (IOException ex) {
 		Logger.getLogger(ServerContent.class.getName()).log(Level.SEVERE, null, ex);
 	    }
 	}

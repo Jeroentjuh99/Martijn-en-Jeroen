@@ -11,3 +11,4 @@ Server naar Client:
 S /hasNewMessage
 S /say de_message_die_zichtbaar_moet_worden
 S /shutdown
+S /gebruikersnaam
