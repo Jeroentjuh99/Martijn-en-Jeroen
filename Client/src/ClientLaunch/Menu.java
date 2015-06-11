@@ -33,7 +33,9 @@ public class Menu extends JPanel {
 				if(!(bericht.getText().isEmpty()))
 				{
 					System.out.println(bericht.getText());
-					berichten.add(bericht.getText());
+//					berichten.add(bericht.getText());
+					server.sendMessage("/say "+gebruikersnaam1+": "+bericht.getText());
+					//server.toServer.flush();
 					bericht.setText(null);
 				}
 			}

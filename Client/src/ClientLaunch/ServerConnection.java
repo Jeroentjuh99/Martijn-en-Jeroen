@@ -32,9 +32,11 @@ public class ServerConnection implements Runnable{
 	public void sendMessage(String message) {
 		try {
 			toServer.writeUTF(message);
+			toServer.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	public void getMessage() {
@@ -109,18 +111,18 @@ public class ServerConnection implements Runnable{
 			System.exit(0);
 		} catch (NullPointerException e) {
 			geenServerreactie++;
-			if(geenServerreactie>20)
-			{
-				JOptionPane.showMessageDialog(null, "Het serveradres is niet meer berijkbaar");
-				System.exit(0);
-			}
+//			if(geenServerreactie>20)
+//			{
+//				JOptionPane.showMessageDialog(null, "Het serveradres is niet meer berijkbaar");
+//				System.exit(0);
+//			}
 		} catch (SocketException e) {
-			geenServerreactie++;
-			if(geenServerreactie>20)
-			{
-				JOptionPane.showMessageDialog(null, "Het serveradres is niet meer berijkbaar");
-				System.exit(0);
-			}
+//			geenServerreactie++;
+//			if(geenServerreactie>20)
+//			{
+//				JOptionPane.showMessageDialog(null, "Het serveradres is niet meer berijkbaar");
+//				System.exit(0);
+//			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -147,7 +149,7 @@ public class ServerConnection implements Runnable{
 		try {
 			ip = ipadres.split(";");
 			Socket socket = new Socket(ip[0], Integer.parseInt(ip[1]));
-			socket.setSoTimeout(10000);
+//			socket.setSoTimeout(10000);
 			// Create an input stream to receive data from the server
 			 fromServer = new DataInputStream(
 			 socket.getInputStream());
