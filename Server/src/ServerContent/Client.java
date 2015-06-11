@@ -57,6 +57,7 @@ public class Client implements Runnable {
 		    for (int i = 0; i < maxClients; i++) {
 			if (!(clients[i] == null)) {
 			    clients[i].output.writeUTF(text);
+			    System.out.println(text);
 			}
 		    }
 		}
