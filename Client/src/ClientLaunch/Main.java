@@ -26,7 +26,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author jeroen
+ * @author 
  */
 public class Main extends JFrame {
 	private JPanel panel = new JPanel();

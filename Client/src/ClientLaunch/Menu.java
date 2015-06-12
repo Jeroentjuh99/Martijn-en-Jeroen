@@ -45,7 +45,7 @@ public class Menu extends JPanel {
 	
 	public void Sendbericht(JTextArea bericht1)
 	{
-		berichten.add(bericht1.getText());
+		server.sendMessage("/say "+gebruikersnaam1+": "+bericht1.getText());
 		bericht1.setText(null);
 	}
 	
