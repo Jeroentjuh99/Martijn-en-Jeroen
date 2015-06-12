@@ -3,9 +3,7 @@ package ClientLaunch;
 import java.io.*;
 import java.net.*;
 
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 public class ServerConnection implements Runnable{
@@ -54,36 +52,10 @@ public class ServerConnection implements Runnable{
 				berichtenVenster.setWrapStyleWord(true);
 				berichtenVenster.setLineWrap(true);
 			}
-			else if(text.startsWith("/isAlive"))
-			{
-				System.out.println("ik leef nog");
-				ikLeefNog();
-				toServer.flush();
-			}
 			else if(text.equals("/gebruikersnaam"))
 			{
 				sendMessage("/gebruikersnaam "+menu.gebruikersnaam1);
 				toServer.flush();
-			}
-			else if(text.startsWith("/hasNewMessage"))
-			{
-				if(menu.berichten.isEmpty())
-				{
-					System.out.println("geenBerichten");
-					aantalBerichten(0);
-					toServer.flush();
-				}
-				else
-				{
-					aantalBerichten(menu.berichten.size());
-					for(int i=0;i<menu.berichten.size();i++)
-					{
-						sendMessage("/say "+menu.gebruikersnaam1+": "+menu.berichten.get(i));
-						toServer.flush();
-						System.out.println("/say "+menu.gebruikersnaam1+": "+menu.berichten.get(i));
-					}
-					menu.berichten.clear();
-				}
 			}
 			else if(text.startsWith("/ip "))
 			{

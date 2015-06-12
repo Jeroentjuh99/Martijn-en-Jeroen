@@ -18,7 +18,6 @@ public class Menu extends JPanel {
 	private Main main;
 	private ServerConnection server;
 	protected String gebruikersnaam1;
-	protected ArrayList<String> berichten = new ArrayList();
 
 	public Menu(Main main, JTextArea panel) {
 		this.main = main;
