@@ -26,7 +26,7 @@ class recursiegame1 extends JFrame
     {
         super("Maze");
         clicks=0;
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(500, 500);
         
         JPanel contentPane = new JPanel(new BorderLayout());
