@@ -28,8 +28,8 @@ public class Main extends JFrame {
 
 	public Main() {
 		super("Windows Live Messenger");
-		String naam = "gebruikersnaam";
-		String ipadress = "145.48.114.219;";
+		String naam = "";
+		String ipadress = "";
 		if(menu.login(naam, ipadress))
 		{
 		setSize(600, 800);
