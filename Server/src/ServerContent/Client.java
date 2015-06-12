@@ -31,6 +31,8 @@ public class Client implements Runnable {
 
     @Override
     public void run() {
+	int maxClients = this.maxClients;
+	Client[] clients = this.clients;
 	try {
 	    this.input = new DataInputStream(socket.getInputStream());
 	    this.output = new DataOutputStream(socket.getOutputStream());
