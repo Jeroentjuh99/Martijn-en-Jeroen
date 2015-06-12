@@ -69,7 +69,7 @@ public class ServerConnection implements Runnable{
 				toServer.flush();
 				geenServerreactie=0;
 			}
-			else if(text.startsWith("/gebruikersnaam "))
+			else if(text.equals("/gebruikersnaam"))
 			{
 				sendMessage("/gebruikersnaam "+menu.gebruikersnaam1);
 				toServer.flush();

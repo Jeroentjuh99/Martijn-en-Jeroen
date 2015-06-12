@@ -26,6 +26,7 @@ public class Client implements Runnable {
 	this.clients = clients;
 	this.maxClients = clients.length;
 	Thread t = new Thread(this);
+	t.start();
     }
 
     @Override
@@ -36,6 +37,7 @@ public class Client implements Runnable {
 
 	    output.writeUTF("/gebruikersnaam");
 	    this.clientName = input.readUTF().substring(16);
+	    System.err.println(clientName);
 
 	    synchronized (this) {
 		for (int i = 0; i < maxClients; i++) {
