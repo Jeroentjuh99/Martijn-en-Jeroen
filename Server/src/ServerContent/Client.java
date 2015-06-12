@@ -59,6 +59,9 @@ public class Client implements Runnable {
 	    while (true) {
 		synchronized (this) {
 		    String text = input.readUTF();
+		    if (text.startsWith("/quit")) {
+			break;
+		    }
 		    for (int i = 0; i < maxClients; i++) {
 			if (!(clients[i] == null)) {
 			    clients[i].output.writeUTF(text);
@@ -67,17 +70,16 @@ public class Client implements Runnable {
 		    }
 		}
 	    }
-	    
+
 	    synchronized (this) {
 		for (int i = 0; i < maxClients; i++) {
 		    if (clients[i] != null && clients[i] != this
 			    && clients[i].clientName != null) {
-			clients[i].output.writeUTF("*** The user " + clientName
-				+ " is leaving the chat room !!! ***");
+			clients[i].output.writeUTF("/say " + clientName + " left the room.");
 		    }
 		}
 	    }
-	    output.writeUTF("*** Bye " + clientName + " ***");
+	    output.writeUTF("/say Bye, see you next time :D");
 
 	    /*
 	     * Clean up. Set the current thread variable to null so that a new client
