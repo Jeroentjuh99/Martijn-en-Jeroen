@@ -81,10 +81,6 @@ public class Client implements Runnable {
 	    }
 	    output.writeUTF("/say Bye, see you next time :D");
 
-	    /*
-	     * Clean up. Set the current thread variable to null so that a new client
-	     * could be accepted by the server.
-	     */
 	    synchronized (this) {
 		for (int i = 0; i < maxClients; i++) {
 		    if (clients[i] == this) {
