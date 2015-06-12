@@ -52,8 +52,8 @@ public class Client implements Runnable {
 	    }
 
 	    while (true) {
-		String text = input.readUTF();
 		synchronized (this) {
+		    String text = input.readUTF();
 		    for (int i = 0; i < maxClients; i++) {
 			if (!(clients[i] == null)) {
 			    clients[i].output.writeUTF(text);
