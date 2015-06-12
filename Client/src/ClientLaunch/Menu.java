@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 public class Menu extends JPanel {
 
-
+	private Recursiegame game;
 	private Main main;
 	private ServerConnection server;
 	protected String gebruikersnaam1;
@@ -22,6 +22,7 @@ public class Menu extends JPanel {
 
 	public Menu(Main main, JTextArea panel) {
 		this.main = main;
+		game = new Recursiegame();
 		server= new ServerConnection(this, panel);
 	}
 	public JButton Send(final JTextArea bericht) {
@@ -36,7 +37,15 @@ public class Menu extends JPanel {
 						server.sendMessage("/quit");
 						System.exit(0);
 					}
-					server.sendMessage("/say "+gebruikersnaam1+": "+bericht.getText());
+					else if(bericht.getText().startsWith("/startgame"))
+					{
+						String[] a = {"a"};
+						game.main(a);
+					}
+					else{
+						server.sendMessage("/say "+gebruikersnaam1+": "+bericht.getText());
+					}
+					
 					bericht.setText(null);
 				}
 			}
@@ -51,7 +60,14 @@ public class Menu extends JPanel {
 			server.sendMessage("/quit");
 			System.exit(0);
 		}
-		server.sendMessage("/say "+gebruikersnaam1+": "+bericht1.getText());
+		else if(bericht1.getText().startsWith("/startgame"))
+		{
+			String[] a = {"a"};
+			game.main(a);
+		}
+		else{
+			server.sendMessage("/say "+gebruikersnaam1+": "+bericht1.getText());	
+		}
 		bericht1.setText(null);
 	}
 	

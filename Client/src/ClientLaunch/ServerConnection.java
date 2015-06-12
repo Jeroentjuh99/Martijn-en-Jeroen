@@ -117,7 +117,7 @@ public class ServerConnection implements Runnable{
 	
 	public void aantalBerichten(int hoeveelheid){
 	try {
-		toServer.writeInt(hoeveelheid);;;
+		toServer.writeInt(hoeveelheid);
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
