@@ -19,11 +19,9 @@ public class Menu extends JPanel {
 	private ServerConnection server;
 	protected String gebruikersnaam1;
 	protected ArrayList<String> berichten = new ArrayList();
-//	private JPanel panel;
 
 	public Menu(Main main, JTextArea panel) {
 		this.main = main;
-//		this.panel = panel;
 		server= new ServerConnection(this, panel);
 	}
 	public JButton Send(final JTextArea bericht) {
@@ -33,9 +31,12 @@ public class Menu extends JPanel {
 				if(!(bericht.getText().isEmpty()))
 				{
 					System.out.println(bericht.getText());
-//					berichten.add(bericht.getText());
+					if(bericht.getText().startsWith("/quit"))
+					{
+						server.sendMessage("/quit");
+						System.exit(0);
+					}
 					server.sendMessage("/say "+gebruikersnaam1+": "+bericht.getText());
-					//server.toServer.flush();
 					bericht.setText(null);
 				}
 			}
@@ -45,17 +46,22 @@ public class Menu extends JPanel {
 	
 	public void Sendbericht(JTextArea bericht1)
 	{
+		if(bericht1.getText().startsWith("/quit"))
+		{
+			server.sendMessage("/quit");
+			System.exit(0);
+		}
 		server.sendMessage("/say "+gebruikersnaam1+": "+bericht1.getText());
 		bericht1.setText(null);
 	}
 	
 	
-	public boolean login()
+	public boolean login(String naam, String ip)
 	{
 		JTextField gebruikersnaam = new JTextField();
 		JTextField ipadres = new JTextField();
-		gebruikersnaam.setText("gebruikersnaam");
-		ipadres.setText("145.48.114.219;");
+		gebruikersnaam.setText(naam);
+		ipadres.setText(ip);
 		ipadres.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
@@ -76,25 +82,23 @@ public class Menu extends JPanel {
 		{
 			if(!gebruikersnaam.getText().isEmpty()&&!ipadres.getText().isEmpty())
 			{
-//				server= new ServerConnection(this, panel);
 				this.gebruikersnaam1= gebruikersnaam.getText();
 				if(server.serverConnection(gebruikersnaam.getText(),ipadres.getText()))
 				{
-//					server= new ServerConnection(this, panel);
 					server.startThread();
 					return true;
 				}
 				else
 				{
 					JOptionPane.showMessageDialog(null, "Het serveradres is niet berijkbaar");
-					login();
+					login(gebruikersnaam.getText(),ipadres.getText());
 					return false;
 				}
 			}
 			else
 			{
 				JOptionPane.showMessageDialog(null, "Vul een gebruikersnaam in en een ipadres + poortnummer");
-				login();
+				login(gebruikersnaam.getText(),ipadres.getText());
 				return false;
 			}
 		}

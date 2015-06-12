@@ -15,9 +15,6 @@ public class ServerConnection implements Runnable{
 	private String[] ip;
 	private DataOutputStream toServer;
 	private DataInputStream fromServer;
-	private int niksontvangen;
-	private int geenServerreactie;
-//	private InetAddress Localip = getLocalHost();
 	public ServerConnection(Menu menu, JTextArea p) {
 		this.menu = menu;
 		this.berichtenVenster = p;
@@ -52,11 +49,6 @@ public class ServerConnection implements Runnable{
 			}
 			else if(text.startsWith("/say "))
 			{
-//				JTextArea message = new JTextArea(5,50);
-//				message.setText(text.substring(4, text.length()-1));
-//				message.setWrapStyleWord(true);
-//				message.setLineWrap(true);
-//				//message.
 				berichtenVenster.append(text.substring(4, text.length()));
 				berichtenVenster.append("\n\n");
 				berichtenVenster.setWrapStyleWord(true);
@@ -67,7 +59,6 @@ public class ServerConnection implements Runnable{
 				System.out.println("ik leef nog");
 				ikLeefNog();
 				toServer.flush();
-				geenServerreactie=0;
 			}
 			else if(text.equals("/gebruikersnaam"))
 			{
@@ -110,19 +101,7 @@ public class ServerConnection implements Runnable{
 			JOptionPane.showMessageDialog(null, "Het serveradres is niet meer berijkbaar");
 			System.exit(0);
 		} catch (NullPointerException e) {
-			geenServerreactie++;
-//			if(geenServerreactie>20)
-//			{
-//				JOptionPane.showMessageDialog(null, "Het serveradres is niet meer berijkbaar");
-//				System.exit(0);
-//			}
 		} catch (SocketException e) {
-//			geenServerreactie++;
-//			if(geenServerreactie>20)
-//			{
-//				JOptionPane.showMessageDialog(null, "Het serveradres is niet meer berijkbaar");
-//				System.exit(0);
-//			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -149,28 +128,18 @@ public class ServerConnection implements Runnable{
 		try {
 			ip = ipadres.split(";");
 			Socket socket = new Socket(ip[0], Integer.parseInt(ip[1]));
-//			socket.setSoTimeout(10000);
-			// Create an input stream to receive data from the server
 			 fromServer = new DataInputStream(
 			 socket.getInputStream());
 
-			// Create an output stream to send data to the server
 			toServer =
 			new DataOutputStream(socket.getOutputStream());
 			connectie = true;
 			return connectie;
-//			System.out.println("sdfsdfhaopisfdhafdpoahogfs");
 		} catch (Exception ex) {
-			// jta.append(ex.toString() + '\n');
 			connectie = false;
 			return connectie;
-//		} finally {
-//			System.out.println("finaly");
-//			return connectie;
 		}
 
-		// if()
-		// ServerConnection c = new ServerConnection(menu, panel);
 	}
 
 	@Override
@@ -178,7 +147,7 @@ public class ServerConnection implements Runnable{
 		while(true){	
 			try {
 				getMessage();
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

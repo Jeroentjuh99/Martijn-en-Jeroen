@@ -39,7 +39,9 @@ public class Main extends JFrame {
 
 	public Main() {
 		super("Windows Live Messenger");
-		if(menu.login())
+		String naam = "gebruikersnaam";
+		String ipadress = "145.48.114.219;";
+		if(menu.login(naam, ipadress))
 		{
 		setSize(600, 800);
 		JPanel backgroundSouth = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -52,17 +54,13 @@ public class Main extends JFrame {
 		panel.add(scrollen1);
 		backgroundSouth.add(scrollen);
 		backgroundSouth.add(menu.Send(bericht));
-//		JButton button = menu.Send(bericht);
-//		backgroundSouth.add(button);
-//		getRootPane().setDefaultButton(button);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		backgroundSouth.setBorder(BorderFactory.createLineBorder(Color.orange,5));
 		add(backgroundSouth, BorderLayout.SOUTH);
 		getContentPane().add(panel);
 		setResizable(false);
 		setVisible(true);
 		
-//		ServerConnection c = new ServerConnection(menu, panel);
 		}
 		else{
 			System.exit(0);
@@ -88,7 +86,6 @@ public class Main extends JFrame {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
