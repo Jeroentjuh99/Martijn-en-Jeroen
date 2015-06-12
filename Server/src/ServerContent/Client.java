@@ -39,7 +39,7 @@ public class Client implements Runnable {
 
 	    output.writeUTF("/gebruikersnaam");
 	    this.clientName = input.readUTF().substring(16);
-	    output.writeUTF("/say Welcome to the server, " + clientName + ". \nType /quit to quit the client.");
+	    output.writeUTF("/say Welcome to the server, " + clientName + ". \nType /quit to quit the client, type /startgame to start the game");
 	    System.err.println(clientName);
 
 	    synchronized (this) {
