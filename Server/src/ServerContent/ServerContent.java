@@ -21,7 +21,7 @@ public class ServerContent implements Runnable {
 
     private final JTextArea textOut;
     private ServerSocket server = null;
-    private int maxClients = 10;
+    private int maxClients = 11;
     private Client[] clients = new Client[maxClients];
     private ServerLog logger;
 

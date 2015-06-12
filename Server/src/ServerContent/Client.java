@@ -37,6 +37,7 @@ public class Client implements Runnable {
 
 	    output.writeUTF("/gebruikersnaam");
 	    this.clientName = input.readUTF().substring(16);
+	    output.writeUTF("/say Welcome to the server, " + clientName + ". \nType /quit to quit the client.");
 	    System.err.println(clientName);
 
 	    synchronized (this) {
@@ -61,6 +62,29 @@ public class Client implements Runnable {
 			    clients[i].output.writeUTF(text);
 			    System.out.println(text);
 			}
+		    }
+		}
+	    }
+	    
+	    synchronized (this) {
+		for (int i = 0; i < maxClients; i++) {
+		    if (clients[i] != null && clients[i] != this
+			    && clients[i].clientName != null) {
+			clients[i].output.writeUTF("*** The user " + clientName
+				+ " is leaving the chat room !!! ***");
+		    }
+		}
+	    }
+	    output.writeUTF("*** Bye " + clientName + " ***");
+
+	    /*
+	     * Clean up. Set the current thread variable to null so that a new client
+	     * could be accepted by the server.
+	     */
+	    synchronized (this) {
+		for (int i = 0; i < maxClients; i++) {
+		    if (clients[i] == this) {
+			clients[i] = null;
 		    }
 		}
 	    }
