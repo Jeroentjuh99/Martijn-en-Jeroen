@@ -36,10 +36,8 @@ public class ServerConnection implements Runnable{
 
 	public void getMessage() {
 		String text=null;
-		System.out.println("Check");
 		try {
 			text = fromServer.readUTF();
-			System.err.println(text);
 			if(text.isEmpty())
 			{
 				System.out.println("niks gekregen");
@@ -79,13 +77,7 @@ public class ServerConnection implements Runnable{
 		}
 	}
 	
-	public void ikLeefNog(){
-		try {
-			toServer.writeBoolean(true);;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+
 	
 	public void aantalBerichten(int hoeveelheid){
 	try {

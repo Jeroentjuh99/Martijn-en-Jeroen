@@ -30,7 +30,6 @@ public class Menu extends JPanel {
 			public void actionPerformed(ActionEvent event) {
 				if(!(bericht.getText().isEmpty()))
 				{
-					System.out.println(bericht.getText());
 					if(bericht.getText().startsWith("/quit"))
 					{
 						server.sendMessage("/quit");
