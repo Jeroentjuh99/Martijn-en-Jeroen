@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.transformation.SortedList;
 import javax.swing.*;
 
 /**
@@ -26,7 +25,7 @@ public class ServerContent implements Runnable {
     private int maxClients = 10;
     private Client[] clients = new Client[maxClients];
     private ServerLog logger;
-    private String[] validCommands = {"/shutdown", "/quit", "/exit", "/ip", "/say ", "/help"};
+    private String[] validCommands = {"/shutdown", "/quit", "/exit", "/ip", "/say ", "/help", "/showUsers", "/showIPs"};
 
     public ServerContent(JTextArea textOut) {
 	this.textOut = textOut;
@@ -79,7 +78,14 @@ public class ServerContent implements Runnable {
 		    }
 		}
 	    } else if (text.equalsIgnoreCase(validCommands[5])) {
+		validCommand(text);
 		Help();
+	    } else if (text.equalsIgnoreCase(validCommands[6])) {
+		validCommand(text);
+		showConnectedClients();
+	    } else if (text.equalsIgnoreCase(validCommands[7])) {
+		validCommand(text);
+		showConnectedIPs();
 	    } else {
 		Help();
 	    }
@@ -136,6 +142,40 @@ public class ServerContent implements Runnable {
 	    t += a + ". \"" + validCommands[i] + "\"\n";
 	}
 	t += "without the \"";
+	validCommand(t);
+    }
+
+    private void showConnectedClients() {
+	List<Client> clientsList = new ArrayList();
+	for (int i = 0; i < clients.length; i++) {
+	    if (!(clients[i] == null)) {
+		clientsList.add(clients[i]);
+	    }
+	}
+	Collections.sort(clientsList);
+	String t = "The connected users are:\n";
+	int i = 1;
+	for (Client c : clientsList) {
+	    t += i + ". " + c.getClientName() + "\n";
+	    i++;
+	}
+	validCommand(t);
+    }
+
+    private void showConnectedIPs() {
+	List<Client> clientsList = new ArrayList();
+	for (int i = 0; i < clients.length; i++) {
+	    if (!(clients[i] == null)) {
+		clientsList.add(clients[i]);
+	    }
+	}
+	Collections.sort(clientsList, Client.SortOnIp());
+	String t = "The connected IPs are:\n";
+	int i = 1;
+	for (Client c : clientsList) {
+	    t += i + ". " + c.getIP()+ "\n";
+	    i++;
+	}
 	validCommand(t);
     }
 }

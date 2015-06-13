@@ -7,12 +7,13 @@ package ServerContent;
 
 import java.io.*;
 import java.net.*;
+import java.util.Comparator;
 
 /**
  *
  * @author jeroen
  */
-public class Client implements Runnable {
+public class Client implements Runnable, Serializable, Comparable<Client> {
 
     private String clientName, ip = null;
     private DataInputStream input;
@@ -40,7 +41,7 @@ public class Client implements Runnable {
 	    output.writeUTF("/gebruikersnaam");
 	    this.clientName = input.readUTF().substring(16);
 	    output.writeUTF("/ip");
-	    this.ip = input.readUTF();
+	    this.ip = input.readUTF().substring(4);
 	    output.writeUTF("/say Welcome to the server, " + clientName + ". \nType /quit to quit the client, type /startgame to start the game");
 
 	    synchronized (this) {
@@ -50,8 +51,8 @@ public class Client implements Runnable {
 			break;
 		    }
 		}
-		
-		this.server.messageFromClient(clientName + " connected to the server");
+
+		this.server.messageFromClient("/say " + clientName + " connected to the server");
 		for (int i = 0; i < maxClients; i++) {
 		    if (clients[i] != null && clients[i] != this) {
 			clients[i].output.writeUTF("/say " + clientName + " just joined the chat!");
@@ -103,5 +104,24 @@ public class Client implements Runnable {
 
     public String getClientName() {
 	return clientName;
+    }
+
+    public String getIP() {
+	return ip;
+    }
+
+    @Override
+    public int compareTo(Client o) {
+	return this.clientName.compareToIgnoreCase(o.clientName);
+    }
+
+    public static Comparator<Client> SortOnIp() {
+	return new Comparator<Client>() {
+
+	    @Override
+	    public int compare(Client o1, Client o2) {
+		return o1.ip.compareTo(o2.ip);
+	    }
+	};
     }
 }
