@@ -96,7 +96,6 @@ public class ServerContent implements Runnable {
 	    }
 	} catch (Exception e) {
 	}
-
     }
 
     public void closeLog() {
