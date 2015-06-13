@@ -18,6 +18,8 @@ public class Menu extends JPanel {
 	private Main main;
 	private ServerConnection server;
 	protected String gebruikersnaam1;
+	protected String textveldGebruikersnaam;
+	protected String textveldIp;
 
 	public Menu(Main main, JTextArea panel) {
 		this.main = main;
@@ -70,12 +72,12 @@ public class Menu extends JPanel {
 	}
 	
 	
-	public boolean login(String naam, String ip)
+	public boolean login()
 	{
 		JTextField gebruikersnaam = new JTextField();
 		JTextField ipadres = new JTextField();
-		gebruikersnaam.setText(naam);
-		ipadres.setText(ip);
+		gebruikersnaam.setText(textveldGebruikersnaam);
+		ipadres.setText(textveldIp);
 		ipadres.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
@@ -105,6 +107,8 @@ public class Menu extends JPanel {
 				else
 				{
 					JOptionPane.showMessageDialog(null, "Het serveradres is niet berijkbaar");
+					textveldGebruikersnaam= gebruikersnaam.getText();
+					textveldIp= ipadres.getText();
 //					login(gebruikersnaam.getText(),ipadres.getText());
 					return false;
 				}
@@ -113,6 +117,8 @@ public class Menu extends JPanel {
 			{
 				JOptionPane.showMessageDialog(null, "Vul een gebruikersnaam in en een ipadres + poortnummer");
 //				login(gebruikersnaam.getText(),ipadres.getText());
+				textveldGebruikersnaam= gebruikersnaam.getText();
+				textveldIp= ipadres.getText();
 				return false;
 			}
 		}

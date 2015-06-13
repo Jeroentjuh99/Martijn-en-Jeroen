@@ -28,10 +28,15 @@ public class Main extends JFrame {
 
 	public Main() {
 		super("Windows Live Messenger");
-		String naam = "";
-		String ipadress = "";
-		if(menu.login(naam, ipadress))
+		boolean test= false;
+		while(!test)
 		{
+			if(menu.login())
+			{
+				test=true;
+			}
+				
+		}
 		setSize(600, 800);
 		JPanel backgroundSouth = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JTextArea bericht = new JTextArea(5,40); 
@@ -50,10 +55,6 @@ public class Main extends JFrame {
 		setResizable(false);
 		setVisible(true);
 		
-		}
-		else{
-			System.exit(0);
-		}
 	}
 	
 	public void volgendeRegel(final JTextArea bericht)
