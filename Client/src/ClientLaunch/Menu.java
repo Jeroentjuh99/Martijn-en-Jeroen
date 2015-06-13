@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -96,11 +95,12 @@ public class Menu extends JPanel {
 				"Gebruikersnaam", JOptionPane.OK_CANCEL_OPTION);
 		if(option==JOptionPane.OK_OPTION)
 		{
-			if(!gebruikersnaam.getText().isEmpty()&&!ipadres.getText().isEmpty())
+			if(!gebruikersnaam.getText().isEmpty()&&!ipadres.getText().isEmpty() || gebruikersnaam.getText().equalsIgnoreCase("Server"))
 			{
 				this.gebruikersnaam1= gebruikersnaam.getText();
 				if(server.serverConnection(gebruikersnaam.getText(),ipadres.getText()))
 				{
+				    main.setappName(gebruikersnaam1);
 					server.startThread();
 					return true;
 				}
@@ -109,14 +109,12 @@ public class Menu extends JPanel {
 					JOptionPane.showMessageDialog(null, "Het serveradres is niet berijkbaar");
 					textveldGebruikersnaam= gebruikersnaam.getText();
 					textveldIp= ipadres.getText();
-//					login(gebruikersnaam.getText(),ipadres.getText());
 					return false;
 				}
 			}
 			else
 			{
 				JOptionPane.showMessageDialog(null, "Vul een gebruikersnaam in en een ipadres + poortnummer");
-//				login(gebruikersnaam.getText(),ipadres.getText());
 				textveldGebruikersnaam= gebruikersnaam.getText();
 				textveldIp= ipadres.getText();
 				return false;

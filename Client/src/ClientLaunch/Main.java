@@ -45,6 +45,7 @@ public class Main extends JFrame {
 		volgendeRegel(ontvangenBerichten);
 		JScrollPane scrollen = new JScrollPane(bericht, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		JScrollPane scrollen1 = new JScrollPane(ontvangenBerichten, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollen1.setAutoscrolls(true);
 		panel.add(scrollen1);
 		backgroundSouth.add(scrollen);
 		backgroundSouth.add(menu.Send(bericht));
@@ -90,6 +91,12 @@ public class Main extends JFrame {
 		
 	});
 	}
+
+    void setappName(String gebruikersnaam1) {
+	String title = super.getTitle();
+	title += ": " + gebruikersnaam1;
+	super.setTitle(title);
+    }
 
 
 }

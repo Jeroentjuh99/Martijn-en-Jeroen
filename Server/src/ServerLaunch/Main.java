@@ -49,9 +49,10 @@ public class Main extends JFrame {
 	add(pane, BorderLayout.CENTER);
 	add(textIn, BorderLayout.SOUTH);
 	add(button, BorderLayout.NORTH);
-
+	
 	setResizable(false);
 	setVisible(true);
+	textIn.requestFocusInWindow();
     }
 
     private JTextArea setTextArea(JTextArea textOut) {

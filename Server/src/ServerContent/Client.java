@@ -76,6 +76,7 @@ public class Client implements Runnable, Serializable, Comparable<Client> {
 	    }
 
 	    synchronized (this) {
+		this.server.messageFromClient("/say " + clientName + " has logged off");
 		for (int i = 0; i < maxClients; i++) {
 		    if (clients[i] != null && clients[i] != this
 			    && clients[i].clientName != null) {
@@ -99,7 +100,6 @@ public class Client implements Runnable, Serializable, Comparable<Client> {
 
     public void messageFromServer(String text) throws IOException {
 	output.writeUTF(text);
-
     }
 
     public String getClientName() {

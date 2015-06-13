@@ -59,7 +59,7 @@ public class ServerContent implements Runnable {
 		validCommand(text);
 		for (int i = 0; i < maxClients; i++) {
 		    if (!(clients[i] == null)) {
-			clients[i].messageFromServer(validCommands[0]);
+			clients[i].messageFromServer(validCommands[0].substring(0, 9));
 		    }
 		}
 		closeLog();
@@ -71,6 +71,8 @@ public class ServerContent implements Runnable {
 		logText(InetAddress.getLocalHost() + ":" + server.getLocalPort());
 
 	    } else if (text.startsWith(validCommands[2].substring(0, 5))) {
+		String[] textArray = text.split(" ", 2);
+		text = textArray[0] + " Server: " + textArray[1];
 		validCommand(text);
 		for (int i = 0; i < maxClients; i++) {
 		    if (!(clients[i] == null)) {
@@ -121,7 +123,7 @@ public class ServerContent implements Runnable {
 		if (i == maxClients) {
 		    DataOutputStream d = new DataOutputStream(socket.getOutputStream());
 		    d.writeUTF("/say Server is too busy, please try again later");
-		    d.writeUTF("/shutdown");
+		    d.writeUTF(validCommands[0].substring(0, 9));
 		    d.close();
 		    socket.close();
 		}
@@ -142,7 +144,7 @@ public class ServerContent implements Runnable {
 	int i = 0;
 	for (i = 0; i < validCommands.length; i++) {
 	    a = i + 1;
-	    t += a + ". \"" + validCommands[i] + "\" \n";
+	    t += a + ". \"" + validCommands[i] + "\"s \n";
 	}
 	t += "without the \" ";
 	validCommand(t);
@@ -203,7 +205,7 @@ public class ServerContent implements Runnable {
 		if (clients[i].getIP().equalsIgnoreCase(banHammer)) {
 		    try {
 			clients[i].messageFromServer("/say The BanHammer has spoken!");
-			clients[i].messageFromServer("/shutdown");
+			clients[i].messageFromServer(validCommands[0].substring(0, 9));
 			validCommand(clients[i].getClientName() + " has been kicked");
 			clients[i] = null;
 		    } catch (IOException e) {
