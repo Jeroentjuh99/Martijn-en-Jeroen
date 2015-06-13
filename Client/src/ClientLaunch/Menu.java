@@ -105,14 +105,14 @@ public class Menu extends JPanel {
 				else
 				{
 					JOptionPane.showMessageDialog(null, "Het serveradres is niet berijkbaar");
-					login(gebruikersnaam.getText(),ipadres.getText());
+//					login(gebruikersnaam.getText(),ipadres.getText());
 					return false;
 				}
 			}
 			else
 			{
 				JOptionPane.showMessageDialog(null, "Vul een gebruikersnaam in en een ipadres + poortnummer");
-				login(gebruikersnaam.getText(),ipadres.getText());
+//				login(gebruikersnaam.getText(),ipadres.getText());
 				return false;
 			}
 		}
