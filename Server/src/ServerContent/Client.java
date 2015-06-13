@@ -20,19 +20,19 @@ public class Client implements Runnable {
     private final Socket socket;
     private final Client[] clients;
     private int maxClients;
+    private final ServerContent server;
 
-    public Client(Socket socket, Client[] clients) {
+    public Client(Socket socket, Client[] clients, ServerContent serverC) {
 	this.socket = socket;
 	this.clients = clients;
 	this.maxClients = clients.length;
+	this.server = serverC;
 	Thread t = new Thread(this);
 	t.start();
     }
 
     @Override
     public void run() {
-	int maxClients = this.maxClients;
-	Client[] clients = this.clients;
 	try {
 	    this.input = new DataInputStream(socket.getInputStream());
 	    this.output = new DataOutputStream(socket.getOutputStream());
@@ -40,12 +40,11 @@ public class Client implements Runnable {
 	    output.writeUTF("/gebruikersnaam");
 	    this.clientName = input.readUTF().substring(16);
 	    output.writeUTF("/say Welcome to the server, " + clientName + ". \nType /quit to quit the client, type /startgame to start the game");
-	    System.err.println(clientName);
 
 	    synchronized (this) {
 		for (int i = 0; i < maxClients; i++) {
 		    if (clients[i] != null && clients[i] == this) {
-			clientName = clientName;
+			this.clientName = clientName;
 			break;
 		    }
 		}
@@ -62,10 +61,10 @@ public class Client implements Runnable {
 		    if (text.startsWith("/quit")) {
 			break;
 		    }
+		    this.server.messageFromClient(text);
 		    for (int i = 0; i < maxClients; i++) {
 			if (!(clients[i] == null)) {
 			    clients[i].output.writeUTF(text);
-			    System.out.println(text);
 			}
 		    }
 		}
@@ -79,7 +78,6 @@ public class Client implements Runnable {
 		    }
 		}
 	    }
-	    output.writeUTF("/say Bye, see you next time :D");
 
 	    synchronized (this) {
 		for (int i = 0; i < maxClients; i++) {
@@ -92,5 +90,9 @@ public class Client implements Runnable {
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
+    }
+    
+    public void messageFromServer(String text) throws IOException{
+	output.writeUTF(text);
     }
 }

@@ -49,22 +49,34 @@ public class ServerContent implements Runnable {
     }
 
     public void handleCommand(String text) {
-	if (text.equalsIgnoreCase("/shutdown")) {
-	    validCommand(text);
-	    closeLog();
-	    System.exit(0);
-	} else if (text.equalsIgnoreCase("/ip")) {
-	    try {
+	try {
+	    if (text.equalsIgnoreCase("/shutdown") || text.equalsIgnoreCase("/quit") || text.equalsIgnoreCase("/exit")) {
+		validCommand(text);
+		for (int i = 0; i < maxClients; i++) {
+		    if (!(clients[i] == null)) {
+			clients[i].messageFromServer("/shutdown");
+		    }
+		}
+		closeLog();
+		System.exit(0);
+
+	    } else if (text.equalsIgnoreCase("/ip")) {
 		validCommand(text);
 		writeToScreen("IP: " + InetAddress.getLocalHost() + ":" + server.getLocalPort());
 		logText(InetAddress.getLocalHost() + ":" + server.getLocalPort());
-	    } catch (UnknownHostException ex) {
-		Logger.getLogger(ServerContent.class.getName()).log(Level.SEVERE, null, ex);
+
+	    } else if (text.startsWith("/say ")) {
+		validCommand(text);
+		for (int i = 0; i < maxClients; i++) {
+		    if (!(clients[i] == null)) {
+			clients[i].messageFromServer(text);
+		    }
+		}
+
 	    }
-	} else if(text.startsWith("/say ")){
-	    validCommand(text);
-	    
+	} catch (Exception e) {
 	}
+
     }
 
     public void closeLog() {
@@ -84,7 +96,7 @@ public class ServerContent implements Runnable {
 		Socket socket = server.accept();
 		for (i = 0; i < maxClients; i++) {
 		    if (clients[i] == null) {
-			clients[i] = new Client(socket, clients);
+			clients[i] = new Client(socket, clients, this);
 			break;
 		    }
 		}
@@ -99,5 +111,9 @@ public class ServerContent implements Runnable {
 		Logger.getLogger(ServerContent.class.getName()).log(Level.SEVERE, null, ex);
 	    }
 	}
+    }
+
+    void messageFromClient(String text) {
+	validCommand(text);
     }
 }
