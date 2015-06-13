@@ -8,7 +8,6 @@ package ServerContent;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
-import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -21,7 +20,7 @@ public class ServerContent implements Runnable {
 
     private final JTextArea textOut;
     private ServerSocket server = null;
-    private int maxClients = 11;
+    private int maxClients = 10;
     private Client[] clients = new Client[maxClients];
     private ServerLog logger;
 
