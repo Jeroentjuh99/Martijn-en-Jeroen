@@ -50,17 +50,17 @@ public class ServerConnection implements Runnable{
 				berichtenVenster.setWrapStyleWord(true);
 				berichtenVenster.setLineWrap(true);
 			}
-			else if(text.equals("/gebruikersnaam"))
+			else if(text.equalsIgnoreCase("/gebruikersnaam"))
 			{
 				sendMessage("/gebruikersnaam "+menu.gebruikersnaam1);
 				toServer.flush();
 			}
-			else if(text.startsWith("/ip "))
+			else if(text.equalsIgnoreCase("/ip"))
 			{
 				sendMessage("/ip "+ InetAddress.getLocalHost().getHostAddress());
 				toServer.flush();
 			}
-			else if(text.startsWith("/shutdown"))
+			else if(text.equalsIgnoreCase("/shutdown"))
 			{
 				JOptionPane
 				.showMessageDialog(null,
