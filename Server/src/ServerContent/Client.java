@@ -91,8 +91,9 @@ public class Client implements Runnable {
 	    e.printStackTrace();
 	}
     }
-    
-    public void messageFromServer(String text) throws IOException{
+
+    public void messageFromServer(String text) throws IOException {
 	output.writeUTF(text);
+
     }
 }
