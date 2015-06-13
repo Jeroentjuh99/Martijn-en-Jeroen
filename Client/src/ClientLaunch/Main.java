@@ -28,12 +28,12 @@ public class Main extends JFrame {
 
 	public Main() {
 		super("Windows Live Messenger");
-		boolean test= false;
-		while(!test)
+		boolean connectie= false;
+		while(!connectie)
 		{
 			if(menu.login())
 			{
-				test=true;
+				connectie=true;
 			}
 				
 		}
