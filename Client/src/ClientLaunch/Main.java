@@ -1,16 +1,13 @@
 package ClientLaunch;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
 
 /**
  *
@@ -29,6 +26,11 @@ public class Main extends JFrame {
 
     public Main() {
 	super("Windows Live Messenger");
+	try {
+	    setIconImage(ImageIO.read(new File("src/icon/icon.png")));
+	} catch (IOException ex) {
+	    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+	}
 	boolean connectie = false;
 	while (!connectie) {
 	    if (menu.login()) {

@@ -8,7 +8,12 @@ package ServerLaunch;
 import ServerContent.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.text.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -32,6 +37,11 @@ public class Main extends JFrame {
 
     public Main() {
 	super("Chatservice Server");
+	try {
+	    setIconImage(ImageIO.read(new File("src/icon/icon.png")));
+	} catch (IOException ex) {
+	    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+	}
 	setLayout(new BorderLayout());
 	setSize(720, 600);
 	setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

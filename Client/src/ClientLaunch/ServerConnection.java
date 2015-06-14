@@ -2,8 +2,7 @@ package ClientLaunch;
 
 import java.io.*;
 import java.net.*;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 
 public class ServerConnection implements Runnable {
 
