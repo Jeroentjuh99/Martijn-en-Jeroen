@@ -54,7 +54,7 @@ public class Main extends JFrame {
 	getContentPane().add(panel);
 	setResizable(false);
 	setVisible(true);
-
+	bericht.requestFocusInWindow();
     }
 
     public void volgendeRegel(final JTextArea bericht) {
