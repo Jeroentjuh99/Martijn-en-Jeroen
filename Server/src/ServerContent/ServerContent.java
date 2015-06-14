@@ -201,7 +201,7 @@ public class ServerContent implements Runnable {
 
 	for (int i = 0; i < clients.length; i++) {
 	    if (!(clients[i] == null)) {
-		if (clients[i].getIP().equalsIgnoreCase(banHammer)) {
+		if (compare(clients[i].getIP(), banHammer)) {
 		    try {
 			clients[i].messageFromServer("/say The BanHammer has spoken!");
 			clients[i].messageFromServer(validCommands[0].substring(0, 9));
@@ -212,5 +212,9 @@ public class ServerContent implements Runnable {
 		}
 	    }
 	}
+    }
+    
+    private static <E> boolean compare(E o1, E o2){
+	return o1.equals(o2);
     }
 }
