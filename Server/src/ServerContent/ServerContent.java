@@ -143,7 +143,7 @@ public class ServerContent implements Runnable {
 	int i = 0;
 	for (i = 0; i < validCommands.length; i++) {
 	    a = i + 1;
-	    t += a + ". \"" + validCommands[i] + "\"s \n";
+	    t += a + ". \"" + validCommands[i] + "\" \n";
 	}
 	t += "without the \" ";
 	validCommand(t);
